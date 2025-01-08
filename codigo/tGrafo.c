@@ -1,4 +1,10 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "tVertice.h"
+#include "tAresta.h"
 #include "tGrafo.h"
+#include "listaGen.h"
 
 struct grafo
 {
@@ -64,4 +70,42 @@ tGrafo *LeGrafo(char *path)
     }
 
     fclose(file);
+}
+
+//ESSA FUNCAO PRECISA SER MESCLADA COM A LEGRAFO 
+tListaGen *construiGrafo(const char *entrada[], int numNos) {
+    tListaGen *grafo = NULL; // Lista principal do grafo
+
+    // Passo 1: Criar os nós
+    for (int i = 0; i < numNos; i++) {
+        // Obtem o nome do nó (primeira parte da string antes da vírgula)
+        char *linha = strdup(entrada[i]);
+        char *nome = strtok(linha, ",");
+        tVertice *no = criaVertice(nome);
+
+        tListaGen *l = criaListaGen(no);
+        grafo = insereListaGen(grafo, l);
+        free(linha);
+    }
+
+    // Passo 2: Preencher as listas de adjacências
+    tListaGen *aux = grafo;
+    for (int i = 0; i < numNos; i++, aux = getProxListaGen(aux)){
+        tVertice *no = (tVertice *)getInfoListaGen(aux);
+        char *linha = strdup(entrada[i]);
+        strtok(linha, ","); // Ignora o nome do nó
+        int j = 0;
+        char *pesoStr;
+        while ((pesoStr = strtok(NULL, ","))) {
+            int peso = atoi(pesoStr);
+            if (peso > 0) {
+                tAresta *aresta = criaAresta(j, peso);
+                addVizinhoVert(no, aresta);
+            }
+            j++;
+        }
+        free(linha);
+    }
+
+    return grafo;
 }
