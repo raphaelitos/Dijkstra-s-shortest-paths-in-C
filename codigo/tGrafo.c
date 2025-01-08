@@ -13,6 +13,8 @@ struct grafo
     int numVertices;
 };
 
+#define MAX_TAM_LINHA 1024
+
 tGrafo *LeGrafo(char *path)
 {
     // manipulacao de IO
@@ -72,40 +74,49 @@ tGrafo *LeGrafo(char *path)
     fclose(file);
 }
 
-//ESSA FUNCAO PRECISA SER MESCLADA COM A LEGRAFO 
-tListaGen *construiGrafo(const char *entrada[], int numNos) {
+tListaGen *constroiGrafo(const char *path) {
+    FILE *file = fopen(path, "r");
+    if (!file) {
+        perror("Erro ao abrir o arquivo");
+        exit(EXIT_FAILURE);
+    }
+
     tListaGen *grafo = NULL; // Lista principal do grafo
+    char linha[MAX_TAM_LINHA];
+    int indiceVertice = 0; // Índice do vértice atual
 
-    // Passo 1: Criar os nós
-    for (int i = 0; i < numNos; i++) {
-        // Obtem o nome do nó (primeira parte da string antes da vírgula)
-        char *linha = strdup(entrada[i]);
-        char *nome = strtok(linha, ",");
-        tVertice *no = criaVertice(nome);
+    // Ler cada linha do arquivo
+    while (fgets(linha, sizeof(linha), file)) {
+        // Criar o vértice com o índice atual
+        char *nome = strtok(linha, ","); // Extrai o nome (e.g., "node_0")
+        tVertice *vertice = criaVertice(nome);
 
-        tListaGen *l = criaListaGen(no);
+        // Criar a lista para o vértice e adicioná-la ao grafo
+        tListaGen *l = criaListaGen(vertice);
         grafo = insereListaGen(grafo, l);
-        free(linha);
-    }
 
-    // Passo 2: Preencher as listas de adjacências
-    tListaGen *aux = grafo;
-    for (int i = 0; i < numNos; i++, aux = getProxListaGen(aux)){
-        tVertice *no = (tVertice *)getInfoListaGen(aux);
-        char *linha = strdup(entrada[i]);
-        strtok(linha, ","); // Ignora o nome do nó
-        int j = 0;
-        char *pesoStr;
-        while ((pesoStr = strtok(NULL, ","))) {
+        // Processar os pesos das arestas
+        char *pesoStr = strtok(NULL, ",");
+        int qualVertice = 0; // Índice do destino
+
+        while (pesoStr) {
             int peso = atoi(pesoStr);
-            if (peso > 0) {
-                tAresta *aresta = criaAresta(j, peso);
-                addVizinhoVert(no, aresta);
+
+            // Ignorar o índice atual (sem aresta para o mesmo vértice)
+            if (qualVertice != indiceVertice && peso > 0) {
+                // Criar a aresta com o índice do nó de destino e o peso
+                tAresta *aresta = criaAresta(qualVertice, peso);
+                addVizinhoVert(vertice, aresta); // Adiciona a aresta ao vértice
             }
-            j++;
+
+            // Próximo peso
+            pesoStr = strtok(NULL, ",");
+            qualVertice++;
         }
-        free(linha);
+
+        indiceVertice++; // Incrementar o índice do vértice atual
     }
 
+    fclose(file);
     return grafo;
 }
