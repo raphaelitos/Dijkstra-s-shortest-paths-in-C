@@ -1,7 +1,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "tVertice.h"
 #include "tAresta.h"
 #include "tGrafo.h"
 #include "listaGen.h"
@@ -14,6 +13,7 @@ struct grafo
 };
 
 #define MAX_TAM_LINHA 1024
+/*
 
 tGrafo *LeGrafo(char *path)
 {
@@ -119,4 +119,105 @@ tListaGen *constroiGrafo(const char *path) {
 
     fclose(file);
     return grafo;
+}
+
+*/
+tGrafo* GrafoInit(char* path) {
+    // manipulacao de IO
+    char final_path[200];
+    //sprintf(final_path, "casos_teste_v3/%s", path);
+
+    FILE *file = fopen(path, "r");
+    if (!file) {
+        perror("Nao foi possivel localizar arquivo de entrada\n");
+        exit(EXIT_FAILURE);
+    }
+
+    tGrafo *grafo = malloc(sizeof(tGrafo));
+    if(!grafo) {
+        perror("Nao foi possivel alocar dinamicamente o grafo.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fscanf(file, "node_%d\n", &grafo->origem);
+
+    long checkpoint = ftell(file); // Salva a posição atual no arquivo
+    if (checkpoint == -1L) {
+        perror("Erro ao obter a posição inicial");
+        fclose(file);
+        return NULL;
+    }
+
+    int numNodes = 0;
+    char parada;
+    while(fscanf(file, "%*[^,\n]") != EOF) { //conta o número de vértices na primeira linha
+        numNodes++;
+        fscanf(file, "%c", &parada);
+        if(parada == '\n') break;
+    }
+
+    grafo->numVertices = numNodes;
+    grafo->vertices = malloc(numNodes * sizeof(tVertice*)); //alocando vetor principal de vértices
+    for(int i = 0; i < numNodes; i++) {
+        char nome[100];
+        sprintf(nome, "node_%d", i);
+        grafo->vertices[i] = criaVertice(nome);
+    }
+
+    if (fseek(file, checkpoint, SEEK_SET) != 0) { //volta ao checkpoint no arquivo
+        perror("Erro ao voltar para o checkpoint");
+        fclose(file);
+        return NULL;
+    }
+
+    for(int i = 0; i < numNodes; i++) {
+        fscanf(file, "%*[^,\n],");
+
+        for(int j = 0; j < numNodes; j++) {
+            if(j == i) continue; //pula para não atribuir peso a uma aresta para o próprio vértice analisado
+            float peso = 0;
+
+            if(fscanf(file, "%f", &peso) == 1 && peso > 0) {
+                addVizinhoVert(grafo->vertices[i], criaAresta(grafo->vertices[j], peso));
+                fscanf(file, "%*c");
+            }
+            else {
+                fscanf(file, "%*[^,\n]"); //necessário para evitar conflito com as palavras "bomba"
+                fscanf(file, "%*c");
+            }
+        }
+    }
+
+    fclose(file);
+    return grafo;
+}
+
+void DesalocaGrafo(tGrafo* grafo) {
+    if(grafo == NULL) return;
+    if(grafo->vertices != NULL) {
+        for(int i = 0; i < grafo->numVertices; i++) {
+            apagaVertice(grafo->vertices[i]);
+        }
+        free(grafo->vertices);
+    }
+    free(grafo);
+}
+
+void ImprimeGrafo(tGrafo* grafo) {
+    printf("node_%d\n", grafo->origem);
+
+    for(int i = 0; i < grafo->numVertices; i++) {
+        printf("%s, ", getNomeVert(grafo->vertices[i]));
+        percorreListaGen(getAdjVert(grafo->vertices[i]), ImprimeAresta, NULL);
+        printf("\n");
+    }
+}
+
+int GetSizeGrafo(tGrafo* grafo) {
+    return grafo->numVertices;
+}
+
+void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
+    for(int i = 0; i < grafo->numVertices; i++)
+        PQ_insert(pq, grafo->vertices[i]);
 }
