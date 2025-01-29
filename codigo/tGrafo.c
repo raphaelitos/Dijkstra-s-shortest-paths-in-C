@@ -123,10 +123,6 @@ tListaGen *constroiGrafo(const char *path) {
 
 */
 tGrafo* GrafoInit(char* path) {
-    // manipulacao de IO
-    char final_path[200];
-    //sprintf(final_path, "casos_teste_v3/%s", path);
-
     FILE *file = fopen(path, "r");
     if (!file) {
         perror("Nao foi possivel localizar arquivo de entrada\n");
@@ -174,7 +170,7 @@ tGrafo* GrafoInit(char* path) {
         fscanf(file, "%*[^,\n],");
 
         for(int j = 0; j < numNodes; j++) {
-            if(j == i) continue; //pula para não atribuir peso a uma aresta para o próprio vértice analisado
+            if(j == i) continue; //pula para nao atribuir peso a uma aresta para o próprio vértice analisado
             float peso = 0;
 
             if(fscanf(file, "%f", &peso) == 1 && peso > 0) {
