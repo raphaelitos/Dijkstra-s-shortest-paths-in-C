@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "tAresta.h"
 #include "tVertice.h"
+#include <limits.h>    // para INT_MAX
 
 #define TAM_MAX_NOME 101
 
@@ -10,7 +11,7 @@ struct vertice{
     char nome[TAM_MAX_NOME];
     tListaGen *adjacencias; // Lista genérica contendo arestas
     tVertice* pai;
-    int acc;
+    float acc;
     int posHeap;
 };
 
@@ -19,7 +20,8 @@ tVertice *criaVertice(const char *nome){
     if (!no) exit(EXIT_FAILURE);
     strcpy(no->nome, nome);
     no->adjacencias = NULL;
-    no->acc = -1; //valor padrão para vértices não visitados
+    no->acc = INT_MAX; //valor padrão para vértices não visitados
+    no->pai = NULL;
     return no;
 }
 
@@ -80,5 +82,5 @@ int getPosHeapVert(tVertice* v) {
 }
 
 void imprimeVert(tVertice* v) {
-    printf("%s [%s] %d\n", v->nome, getNomeVert(v->pai), v->acc);
+    printf("%s [%s] %.2f\n", v->nome, getNomeVert(v->pai), v->acc);
 }
