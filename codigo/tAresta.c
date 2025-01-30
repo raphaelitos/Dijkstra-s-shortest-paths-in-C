@@ -29,3 +29,10 @@ int ImprimeAresta(void* a, void* b) {
 
     return 1;
 }
+
+float getPesoAresta(tAresta *a) {
+    return a->peso; 
+}
+tVertice* getDestinoAresta(tAresta *a) {
+    return a->destino;
+}

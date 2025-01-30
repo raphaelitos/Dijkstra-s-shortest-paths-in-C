@@ -15,4 +15,8 @@ void apagaAresta(void* a);
 
 int ImprimeAresta(void* a, void* b);
 
+float getPesoAresta(tAresta *a);
+
+tVertice* getDestinoAresta(tAresta *a);
+
 #endif
