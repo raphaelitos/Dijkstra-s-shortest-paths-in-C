@@ -44,6 +44,10 @@ void setAccVert(tVertice* v, int acc);
 /// @return o inteiro correspondente
 int getAccVert(tVertice* v);
 
+void setPosHeapVert(tVertice* v, int posHeap);
+
+int getPosHeapVert(tVertice* v);
+
 void imprimeVert(tVertice* v);
 
 #endif

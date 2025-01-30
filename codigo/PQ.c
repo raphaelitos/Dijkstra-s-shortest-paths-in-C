@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "PQ.h"
 
-#define exch(A, B) {tVertice* t = A; A = B; B = t;}
-
 struct pq{
     tVertice** vet;
     int max_N;
@@ -20,6 +18,18 @@ static float ComparaVertice(tVertice *v1, tVertice *v2) {
     return getAccVert(v1) - getAccVert(v2);
 }
 
+static void exchVert(tVertice **a, tVertice **b) {
+    // Troca no array
+    tVertice *temp = *a;
+    *a = *b;
+    *b = temp;
+
+    //ajusta posHeap
+    int tmpPos = getPosHeapVert(*a);
+    setPosHeapVert(*a, getPosHeapVert(*b));
+    setPosHeapVert(*b, tmpPos);
+}
+
 static void Fix_down(PQ* fila, int pos_i) {
     while (2*pos_i <= fila->atual_N) {
         int menor = 2*pos_i;
@@ -28,7 +38,7 @@ static void Fix_down(PQ* fila, int pos_i) {
         }
         if (ComparaVertice(fila->vet[pos_i], fila->vet[menor]) <= 0) break;
 
-        exch(fila->vet[pos_i], fila->vet[menor]);
+        exchVert(&(fila->vet[pos_i]), &(fila->vet[menor]));
         pos_i = menor;
     }
 }
@@ -37,7 +47,7 @@ static void Fix_up(PQ* fila, int pos_i) {
     if(fila ==  NULL) return;
 
     while (pos_i > 1 && ComparaVertice(fila->vet[pos_i/2], fila->vet[pos_i]) > 0) {
-        exch(fila->vet[pos_i], fila->vet[pos_i/2]);
+        exchVert(&(fila->vet[pos_i]), &(fila->vet[pos_i/2]));
         pos_i = pos_i/2;
     }
 
@@ -71,8 +81,8 @@ void PQ_destroy(PQ *pq) {
     }
 }
 
-void PQ_insert(PQ *pq, tVertice *e) {
-    if(pq == NULL || e == NULL) return;
+void PQ_insert(PQ *pq, tVertice *v) {
+    if(pq == NULL || v == NULL) return;
 
     if (pq->atual_N >= pq->max_N) {
         printf("Erro: fila cheia, não é possível inserir mais vertices.\n");
@@ -80,7 +90,8 @@ void PQ_insert(PQ *pq, tVertice *e) {
     }
 
     (pq->atual_N)++;
-    pq->vet[pq->atual_N] = e;
+    pq->vet[pq->atual_N] = v;
+    setPosHeapVert(v, pq->atual_N);
     Fix_up(pq, pq->atual_N);
 }
 
@@ -88,7 +99,7 @@ tVertice* PQ_delmin(PQ *pq) {
     if(pq == NULL || pq->atual_N == 0) return NULL;
 
     tVertice* aux = pq->vet[1];
-    exch(pq->vet[1], pq->vet[pq->atual_N]);
+    exchVert(&(pq->vet[1]), &(pq->vet[pq->atual_N]));
     (pq->atual_N)--;
     Fix_down(pq, 1);
 
@@ -102,4 +113,18 @@ bool PQ_is_empty(PQ *pq) {
 
 int PQ_size(PQ *pq) {
     return pq->atual_N;
+}
+
+void PQ_decrementaChave(PQ *pq, tVertice *v, int novaDist) {
+    if (!pq || !v) return;
+
+    // Se a novaDist for maior ou igual ao valor atual, não faz sentido "diminuir"
+    if (novaDist >= getAccVert(v)) {
+        return;
+    }
+
+    setAccVert(v, novaDist);
+
+    // Sobe o nó, se necessário
+    Fix_up(pq, getPosHeapVert(v));
 }

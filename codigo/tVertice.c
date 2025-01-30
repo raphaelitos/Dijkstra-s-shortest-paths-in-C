@@ -11,6 +11,7 @@ struct vertice{
     tListaGen *adjacencias; // Lista genérica contendo arestas
     tVertice* pai;
     int acc;
+    int posHeap;
 };
 
 tVertice *criaVertice(const char *nome){
@@ -66,6 +67,16 @@ void setAccVert(tVertice* v, int acc) {
 int getAccVert(tVertice* v) {
     if(v == NULL) return -1;
     return v->acc;
+}
+
+void setPosHeapVert(tVertice* v, int posHeap) {
+    if(v == NULL) return;
+    v->posHeap = posHeap;
+}
+
+int getPosHeapVert(tVertice* v) {
+    if(v == NULL) return -1;
+    return v->posHeap;
 }
 
 void imprimeVert(tVertice* v) {
