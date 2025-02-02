@@ -1,8 +1,10 @@
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "tAresta.h"
+#include <limits.h>    // para INT_MAX
 #include "tGrafo.h"
+#include "PQ.h"
+#include "tVertice.h"
+#include "tAresta.h"
 #include "listaGen.h"
 
 struct grafo
@@ -217,15 +219,6 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
     for(int i = 0; i < grafo->numVertices; i++)
         PQ_insert(pq, grafo->vertices[i]);
 }
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>    // para INT_MAX
-#include "tGrafo.h"
-#include "PQ.h"
-#include "tVertice.h"
-#include "tAresta.h"
-#include "listaGen.h"
 
 #ifndef INF
 #define INF INT_MAX
