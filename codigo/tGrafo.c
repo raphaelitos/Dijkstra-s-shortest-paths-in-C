@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>    // para INT_MAX
+#include <limits.h>    
 #include "tGrafo.h"
 #include "PQ.h"
 #include "tVertice.h"
@@ -143,7 +143,7 @@ tGrafo* GrafoInit(char* path) {
 
     fscanf(file, "node_%d\n", &grafo->origem);
 
-    long checkpoint = ftell(file); // Salva a posição atual no arquivo
+    long checkpoint = ftell(file); // Salva a posicao atual no arquivo
     if (checkpoint == -1L) {
         perror("Erro ao obter a posição inicial");
         fclose(file);
@@ -152,14 +152,14 @@ tGrafo* GrafoInit(char* path) {
 
     int numNodes = 0;
     char parada;
-    while(fscanf(file, "%*[^,\n]") != EOF) { //conta o número de vértices na primeira linha
+    while(fscanf(file, "%*[^,\n]") != EOF) { //conta o numero de vertices na primeira linha
         numNodes++;
         fscanf(file, "%c", &parada);
         if(parada == '\n') break;
     }
 
     grafo->numVertices = numNodes;
-    grafo->vertices = malloc(numNodes * sizeof(tVertice*)); //alocando vetor principal de vértices
+    grafo->vertices = malloc(numNodes * sizeof(tVertice*)); //alocando vetor principal de vertices
     for(int i = 0; i < numNodes; i++) {
         char nome[100];
         sprintf(nome, "node_%d", i);
@@ -176,7 +176,7 @@ tGrafo* GrafoInit(char* path) {
         fscanf(file, "%*[^,\n],");
 
         for(int j = 0; j < numNodes; j++) {
-            if(j == i) continue; //pula para nao atribuir peso a uma aresta para o próprio vértice analisado
+            if(j == i) continue; //pula para nao atribuir peso a uma aresta para o proprio vertice analisado
             float peso = 0;
 
             if(fscanf(file, "%f", &peso) == 1 && peso > 0) {
@@ -184,7 +184,7 @@ tGrafo* GrafoInit(char* path) {
                 fscanf(file, "%*c");
             }
             else {
-                fscanf(file, "%*[^,\n]"); //necessário para evitar conflito com as palavras "bomba"
+                fscanf(file, "%*[^,\n]"); //necessario para evitar conflito com as palavras "bomba"
                 fscanf(file, "%*c");
             }
         }
@@ -219,27 +219,35 @@ int GetSizeGrafo(tGrafo* grafo) {
     return grafo->numVertices;
 }
 
+tVertice *getOrigemGrafo(tGrafo *g){
+    if(!g) return NULL;
+    return g->vertices[g->origem];
+}
+
 void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
     for(int i = 0; i < grafo->numVertices; i++)
         PQ_insert(pq, grafo->vertices[i]);
 }
 
 void Dijkstra(tGrafo *g, tVertice *source) {
+    if(!g || !source){
+        printf("Dados invalidos para Dijkstra!");
+        return;
+    }
+    
     int numVertices = GetSizeGrafo(g);
     PQ *pq = PQ_create(numVertices);
     
-    // A fonte tem distância 0
+    // A fonte tem distancia 0
     setAccVert(source, 0);
 
-    for (int i = 0; i < numVertices; i++) {
-        PQ_insert(pq, g->vertices[i]);
-    }
+    InsereVerticesPQ(g, pq);
 
     while (!PQ_is_empty(pq)) {
-        // vértice com menor dist (acc)
+        // vertice com menor dist (acc)
         tVertice *u = PQ_delmin(pq);
 
-        // Percorre lista de adjacências de u
+        // Percorre lista de adjacencias de u
         tListaGen *adj = getAdjVert(u);
         for (tListaGen *aux = adj; aux != NULL; aux = getProxListaGen(aux)) {
             tAresta *aresta = (tAresta*) getInfoListaGen(aux);
@@ -270,7 +278,7 @@ void ImprimeCaminhoRec(FILE *arquivo, tVertice *v) {
     fprintf(arquivo, "%s", getNomeVert(v));
 }
 
-void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, const char *path) {
+void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
     FILE *arquivo = fopen(path, "w");
     if (!arquivo) {
         perror("Erro ao abrir o arquivo para escrita");
@@ -283,7 +291,7 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, const char *path
         tVertice *v = grafo->vertices[i];
         float dist = getAccVert(v);  // dist
 
-        // Confere se o vértice é alcançável
+        // Confere se o vertice e' alcancavel
         if (dist == INT_MAX) {
             continue; 
         }
