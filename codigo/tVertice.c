@@ -66,7 +66,7 @@ void setAccVert(tVertice* v, int acc) {
     v->acc = acc;
 }
 
-int getAccVert(tVertice* v) {
+float getAccVert(tVertice* v) {
     if(v == NULL) return -1;
     return v->acc;
 }

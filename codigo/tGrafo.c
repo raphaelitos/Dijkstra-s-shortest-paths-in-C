@@ -225,32 +225,18 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
 #endif
 
 void Dijkstra(tGrafo *g, tVertice *source) {
-    // 1) Cria a fila de prioridade com capacidade suficiente
     int numVertices = GetSizeGrafo(g);
     PQ *pq = PQ_create(numVertices);
-
-    /*// 2) Inicializa as distâncias (acc) e pais
-    for (int i = 0; i < numVertices; i++) {
-        tVertice *v = g->vertices[i];
-
-        // Define infinito pra quem não for a fonte
-        setAccVert(v, INF);
-        setPaiVert(v, NULL);
-    }
-    COMENTEI ISSO POIS MODIFIQUEI A CRIA VERT
-    */
     
     // A fonte tem distância 0
     setAccVert(source, 0);
 
-    // 3) Insere todos os vértices na fila
     for (int i = 0; i < numVertices; i++) {
         PQ_insert(pq, g->vertices[i]);
     }
 
-    // 4) Processa enquanto a PQ não estiver vazia
     while (!PQ_is_empty(pq)) {
-        // Extrai o vértice com menor dist (acc)
+        // vértice com menor dist (acc)
         tVertice *u = PQ_delmin(pq);
 
         // Percorre lista de adjacências de u
@@ -258,25 +244,18 @@ void Dijkstra(tGrafo *g, tVertice *source) {
         for (tListaGen *aux = adj; aux != NULL; aux = getProxListaGen(aux)) {
             tAresta *aresta = (tAresta*) getInfoListaGen(aux);
             tVertice *v = getDestinoAresta(aresta); 
+            
             float peso = getPesoAresta(aresta);
-
-            // 4.1) Relaxa a aresta (u,v) se for possível melhorar
-            int alt = getAccVert(u) + (int)peso; 
+            float alt = getAccVert(u) + peso; 
+            
             if (alt < getAccVert(v)) {
-                // Atualiza dist e pai
-                setAccVert(v, alt);
+                //Atualiza o pai e a PQ
                 setPaiVert(v, u);
-
-                // Aqui entra a chamada à "decrementaChave" (decreaseKey)
                 PQ_decrementaChave(pq, v, alt);
             }
+
         }
     }
 
-    // 5) Fim - a PQ já pode ser destruída
     PQ_destroy(pq);
-
-    // Agora cada vértice tem:
-    //   - acc = distância mínima a partir de `source`
-    //   - pai = predecessor no caminho mínimo
 }
