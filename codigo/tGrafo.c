@@ -7,6 +7,10 @@
 #include "tAresta.h"
 #include "listaGen.h"
 
+#ifndef INF
+#define INF INT_MAX
+#endif
+
 struct grafo
 {
     tVertice **vertices;
@@ -220,10 +224,6 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
         PQ_insert(pq, grafo->vertices[i]);
 }
 
-#ifndef INF
-#define INF INT_MAX
-#endif
-
 void Dijkstra(tGrafo *g, tVertice *source) {
     int numVertices = GetSizeGrafo(g);
     PQ *pq = PQ_create(numVertices);
@@ -258,4 +258,42 @@ void Dijkstra(tGrafo *g, tVertice *source) {
     }
 
     PQ_destroy(pq);
+}
+
+void ImprimeCaminhoRec(FILE *arquivo, tVertice *v) {
+    if (v == NULL) return;
+
+    if (getPaiVert(v) != NULL) {
+        ImprimeCaminhoRec(arquivo, getPaiVert(v));
+        fprintf(arquivo, " <- ");
+    }
+    fprintf(arquivo, "%s", getNomeVert(v));
+}
+
+void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, const char *path) {
+    FILE *arquivo = fopen(path, "w");
+    if (!arquivo) {
+        perror("Erro ao abrir o arquivo para escrita");
+        exit(EXIT_FAILURE);
+    }
+
+    int numVertices = GetSizeGrafo(grafo);
+
+    for (int i = 0; i < numVertices; i++) {
+        tVertice *v = grafo->vertices[i];
+        float dist = getAccVert(v);  // dist
+
+        // Confere se o vértice é alcançável
+        if (dist == INT_MAX) {
+            continue; 
+        }
+
+        fprintf(arquivo, "SHORTEST PATH TO %s: ", getNomeVert(v));
+
+        ImprimeCaminhoRec(arquivo, v);
+
+        fprintf(arquivo, " (Distance: %.2f)\n", dist);
+    }
+
+    fclose(arquivo);
 }
