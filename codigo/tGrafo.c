@@ -241,6 +241,7 @@ void Dijkstra(tGrafo *g, tVertice *source) {
     // A fonte tem distancia 0
     setAccVert(source, 0);
 
+    // 3) Insere todos os vértices na fila
     InsereVerticesPQ(g, pq);
 
     while (!PQ_is_empty(pq)) {
