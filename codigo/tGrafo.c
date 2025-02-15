@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>    
+#include <limits.h>
+#include <string.h>
 #include "tGrafo.h"
 #include "PQ.h"
 #include "tVertice.h"
@@ -14,7 +15,7 @@
 struct grafo
 {
     tVertice **vertices;
-    int origem;
+    tVertice* origem;
     int numVertices;
 };
 
@@ -130,6 +131,8 @@ tListaGen *constroiGrafo(const char *path) {
 */
 tGrafo* GrafoInit(char* path) {
     FILE *file = fopen(path, "r");
+    int origem;
+
     if (!file) {
         perror("Nao foi possivel localizar arquivo de entrada\n");
         exit(EXIT_FAILURE);
@@ -141,7 +144,7 @@ tGrafo* GrafoInit(char* path) {
         exit(EXIT_FAILURE);
     }
 
-    fscanf(file, "node_%d\n", &grafo->origem);
+    fscanf(file, "node_%d\n", &origem);
 
     long checkpoint = ftell(file); // Salva a posicao atual no arquivo
     if (checkpoint == -1L) {
@@ -190,6 +193,9 @@ tGrafo* GrafoInit(char* path) {
         }
     }
 
+    //Set da origem
+    grafo->origem = grafo->vertices[origem];
+
     fclose(file);
     return grafo;
 }
@@ -221,12 +227,28 @@ int GetSizeGrafo(tGrafo* grafo) {
 
 tVertice *getOrigemGrafo(tGrafo *g){
     if(!g) return NULL;
-    return g->vertices[g->origem];
+    return g->origem;
 }
 
 void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
     for(int i = 0; i < grafo->numVertices; i++)
         PQ_insert(pq, grafo->vertices[i]);
+}
+
+
+// Função de comparação para o qsort
+static int cmpVertice(const void *v1, const void *v2) {
+    tVertice *vert1 = *(tVertice **)v1;
+    tVertice *vert2 = *(tVertice **)v2;
+    float accV1 = getAccVert(vert1);
+    float accV2 = getAccVert(vert2);
+    
+    if (accV1 < accV2)
+        return -1;
+    else if (accV1 > accV2)
+        return 1;
+    else
+        return strcmp(getNomeVert(vert1), getNomeVert(vert2));
 }
 
 void Dijkstra(tGrafo *g, tVertice *source) {
@@ -267,6 +289,24 @@ void Dijkstra(tGrafo *g, tVertice *source) {
     }
 
     PQ_destroy(pq);
+
+    qsort(g->vertices, g->numVertices, sizeof(tVertice*), cmpVertice);
+}
+
+void ImprimeCaminho(FILE* arquivo, tVertice* v, tVertice* src) {
+    if(v == NULL) return;
+    else if(v == src) {
+        fprintf(arquivo, "%s", getNomeVert(v));
+        fprintf(arquivo, " <- ");
+    }
+
+    tVertice* aux = v;
+    while (aux != src) {
+        fprintf(arquivo, "%s", getNomeVert(aux));
+        fprintf(arquivo, " <- ");
+        aux = getPaiVert(aux);
+    }
+    fprintf(arquivo, "%s", getNomeVert(src));
 }
 
 void ImprimeCaminhoRec(FILE *arquivo, tVertice *v) {
@@ -299,7 +339,7 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
 
         fprintf(arquivo, "SHORTEST PATH TO %s: ", getNomeVert(v));
 
-        ImprimeCaminhoRec(arquivo, v);
+        ImprimeCaminho(arquivo, v, getOrigemGrafo(grafo));
 
         fprintf(arquivo, " (Distance: %.2f)\n", dist);
     }
