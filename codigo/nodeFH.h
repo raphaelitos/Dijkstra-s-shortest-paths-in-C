@@ -4,20 +4,23 @@
 #include "tVertice.h"
 #include <stdbool.h>
 
-typedef struct heapNode tNodeFH;
+typedef struct fibHeapNode tNodeFH;
 
 
-tNodeFH *ndFHInit();
+tNodeFH *ndFHInit(tVertice *v);
 
 void ndFHdestroy(tNodeFH* nodeFH);
 
-void ndHFinsert(tNodeFH *lista, tNodeFH *novo);
+void ndFHinsert(tNodeFH *lista, tNodeFH *novo);
 
-void ndHFremove(tNodeFH *lista, tNodeFH *alvo);
+void ndFHremove(tNodeFH *lista, tNodeFH *alvo);
 
-void ndHFiterator(tNodeFH *lista, tNodeFH *head);
+void ndFHiterator(tNodeFH *lista, tNodeFH *head);
 
 //getters e setters
+
+int ndFHgetKey(tNodeFH *nodeFH);
+
 tVertice* ndFHgetVert(tNodeFH *nodeFH);
 
 void ndFHsetVert(tNodeFH *nodeFH, tVertice *vert);

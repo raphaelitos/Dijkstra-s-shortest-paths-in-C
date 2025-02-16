@@ -2,21 +2,32 @@
 #define _FIB_HEAP_
 
 #include "nodeFH.h"
-#include "circList.h"
 
 typedef struct fibHeap tFH;
-
 
 tFH *fhInit();
 
 void fhDestroy(tFH *fh);
 
-void fhInsert(tFH *fh, tNodeFH *node);
+tNodeFH* fhInsert(tFH *fh, tVertice *vert);
 
-int fhMinimum(tFH *fh);
+tNodeFH* fhMinimum(tFH *fh);
 
 tNodeFH* fhExtractMin(tFH *fh);
 
-void fhUnion(tFH *fh);
+void fhUnion(tFH *fh, tFH *nova);
 
+void consolidate(tFH *fh);
+
+//Vale refletir se sera necessario criar um ponteiro
+//fibnode em vertice para essa parte aqui
+void decreaseKey(tFH *fh, tNodeFH node);
+
+void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
+
+/*
+PESQUISAR O ITERATE E ENTAO CONFERIR A TRADUCAO DO 
+CONSOLIDATE
+EXTRACTMIN
+*/
 #endif
