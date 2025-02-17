@@ -58,6 +58,16 @@ void ndHFinsert(tNodeFH *lista, tNodeFH *novo){
     lista->left->right = novo;
     lista->left = novo;
 }
+//se pa essa funcao aqui eh inutil
+//vale conferir a implementacao la no tad fibHeap
+void ndFHremove(tNodeFH *lista, tNodeFH *alvo){
+    if(!lista || !alvo){
+        printf("dados invalidos em ndfhInsertFilho!\n");
+        exit(EXIT_FAILURE);
+    }
+    alvo->left->right = alvo->right;
+    alvo->right->left = alvo->left;    
+}
 
 void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
     if(!pai || !filho){
@@ -76,21 +86,20 @@ void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
     (pai->grau)++;
     filho->pai = pai;
 }
-//Na verdade acho que so existe removeFliho
-void ndHFremove(tNodeFH *lista, tNodeFH *alvo){
-    if(!lista || !alvo){
+void ndHFremoveFilho(tNodeFH *lista, tNodeFH *filho){
+    if(!lista || !filho){
         printf("dados invalidos em ndFHremove!\n");
         exit(EXIT_FAILURE);
     }
     if(lista->filho == lista->filho->right){
         lista->filho = NULL;
     }//pai c um filho so'
-    else if(lista->filho == alvo){
-        lista->filho = alvo->right;
-        alvo->right->pai = lista;
+    else if(lista->filho == filho){
+        lista->filho = filho->right;
+        filho->right->pai = lista;
     }
-    alvo->left->right = alvo->right;
-    alvo->right->left = alvo->left;
+    filho->left->right = filho->right;
+    filho->right->left = filho->left;
 }
 
 int ndFHgetKey(tNodeFH *nodeFH){

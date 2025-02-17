@@ -15,6 +15,10 @@ void ndFHinsert(tNodeFH *lista, tNodeFH *novo);
 
 void ndFHremove(tNodeFH *lista, tNodeFH *alvo);
 
+void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
+
+void ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
+
 void ndFHiterator(tNodeFH *lista, tNodeFH *head);
 
 //getters e setters
@@ -40,10 +44,6 @@ tNodeFH* ndFHgetPai(tNodeFH *nodeFH);
 void ndFHsetPai(tNodeFH *nodeFH, tNodeFH *pai);
 
 tNodeFH* ndFHgetFilho(tNodeFH *nodeFH);
-
-void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
-
-void ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
 
 int ndFHgetGrau(tNodeFH *node);
 
