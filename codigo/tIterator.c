@@ -8,11 +8,11 @@ typedef struct Iterator {
     tNodeFH *inicio;    // Ponteiro para o nó inicial (cabeça) da lista circular
     tNodeFH *atual;     // Ponteiro para o nó atual na iteração
     int comecou;        // Flag para indicar se a iteração já começou
-} Iterator;
+} tIterator;
 
 // Cria e inicializa o iterador para a lista circular com o nó inicio.
-Iterator* createIterator(tNodeFH *inicio) {
-    Iterator *it = malloc(sizeof(Iterator));
+tIterator* iteratorInit(tNodeFH *inicio) {
+    tIterator *it = malloc(sizeof(tIterator));
     if (it == NULL) {
         printf("erro na alocacao de tIterator!\n");
         exit(EXIT_FAILURE);
@@ -24,7 +24,7 @@ Iterator* createIterator(tNodeFH *inicio) {
 }
 
 // Verifica se ainda há um próximo elemento na iteração.
-bool iteratorHasNext(Iterator *it) {
+bool iteratorHasNext(tIterator *it) {
     if (it->inicio == NULL) {
         return false;
     }
@@ -33,7 +33,7 @@ bool iteratorHasNext(Iterator *it) {
 }
 
 // Retorna o próximo nó da iteração e avança o ponteiro.
-tNodeFH* iteratorNext(Iterator *it) {
+tNodeFH* iteratorNext(tIterator *it) {
     if (!iteratorHasNext(it)) {
         return NULL;  // Final da iteração
     }
@@ -44,6 +44,6 @@ tNodeFH* iteratorNext(Iterator *it) {
 }
 
 // Libera a memória do iterador.
-void destroyIterator(Iterator *it) {
+void iteratorDestroy(tIterator *it) {
     free(it);
 }

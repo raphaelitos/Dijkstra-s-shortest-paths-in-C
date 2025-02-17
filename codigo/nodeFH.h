@@ -39,6 +39,19 @@ void ndFHsetPai(tNodeFH *nodeFH, tNodeFH *pai);
 
 tNodeFH* ndFHgetFilho(tNodeFH *nodeFH);
 
-void ndFHsetFilho(tNodeFH *nodeFH, tNodeFH *filho);
+void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
+
+int ndFHgetGrau(tNodeFH *node);
+
+int ndFHgetGrau(tNodeFH *node);
+
+void ndFHsetGrau(tNodeFH *node, int grauNovo);
+
+int ndFHincGrau(tNodeFH *node);
+
+bool ndFHgetMarcado(tNodeFH *node);
+
+void ndFHsetMarcado(tNodeFH *node, bool valor);
+
 
 #endif

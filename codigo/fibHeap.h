@@ -17,13 +17,14 @@ tNodeFH* fhExtractMin(tFH *fh);
 
 void fhUnion(tFH *fh, tFH *nova);
 
-void consolidate(tFH *fh);
+void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
+
+void fhConsolidate(tFH *fh);
 
 //Vale refletir se sera necessario criar um ponteiro
 //fibnode em vertice para essa parte aqui
-void decreaseKey(tFH *fh, tNodeFH node);
+void fhDecreaseKey(tFH *fh, tNodeFH *node);
 
-void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
 
 /*
 PESQUISAR O ITERATE E ENTAO CONFERIR A TRADUCAO DO 

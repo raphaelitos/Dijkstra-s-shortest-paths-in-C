@@ -43,9 +43,6 @@ void ndHFinsert(tNodeFH *lista, tNodeFH *novo){
     novo->left = lista->left;
     lista->left->right = novo;
     lista->left = novo;
-
-    //return lista;
-
 }
 
 void ndHFremove(tNodeFH *lista, tNodeFH *alvo);
@@ -58,4 +55,22 @@ int ndFHgetKey(tNodeFH *nodeFH){
         exit(EXIT_FAILURE);
     }
     return getAccVert(nodeFH->vert);
+}
+
+void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
+    if(!pai || !filho){
+        printf("dados invalidos em ndfhInsertFilho!\n");
+        exit(EXIT_FAILURE);
+    }
+    if(!(pai->filho)){
+        pai->filho = filho;
+        return;
+    }
+    filho->right = pai->filho->right;
+    filho->left = pai->filho;
+    pai->filho->right->left = filho;
+    pai->filho->right = filho;
+
+    (pai->grau)++;
+    filho->pai = pai;
 }
