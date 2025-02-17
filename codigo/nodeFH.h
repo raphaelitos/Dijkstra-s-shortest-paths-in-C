@@ -21,6 +21,8 @@ void ndFHiterator(tNodeFH *lista, tNodeFH *head);
 
 int ndFHgetKey(tNodeFH *nodeFH);
 
+void ndFHsetKey(tNodeFH *nodeFH, int newKey);
+
 tVertice* ndFHgetVert(tNodeFH *nodeFH);
 
 void ndFHsetVert(tNodeFH *nodeFH, tVertice *vert);
@@ -40,6 +42,8 @@ void ndFHsetPai(tNodeFH *nodeFH, tNodeFH *pai);
 tNodeFH* ndFHgetFilho(tNodeFH *nodeFH);
 
 void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
+
+void ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
 
 int ndFHgetGrau(tNodeFH *node);
 

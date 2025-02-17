@@ -23,7 +23,7 @@ void fhConsolidate(tFH *fh);
 
 //Vale refletir se sera necessario criar um ponteiro
 //fibnode em vertice para essa parte aqui
-void fhDecreaseKey(tFH *fh, tNodeFH *node);
+void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey);
 
 
 /*

@@ -35,7 +35,7 @@ void removeFromRoot(tFH *fh, tNodeFH *node)
     ndFHremove(fh->raiz, node);
     // a operacao abaixo equivale a
     // node.right.left = node.left
-    // Na verdaede esse codigo deveria estar na ndFHremove e nao precisa
+    // Na verdade esse codigo deveria estar na ndFHremove e nao precisa
     // de nada disso :((
     ndFHsetLeft(ndFHgetRight(node), ndFHgetLeft(node));
     ndFHsetRight(ndFHgetLeft(node), ndFHgetRight(node));
@@ -101,8 +101,8 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
 
     if (isNodeRoot(fh, y))
         fh->raiz = ndFHgetRight(fh->raiz);
-    ndFHremove(fh->raiz, y);
     // REVISAR A FUNCAO DE REMOCAO
+    ndFHremove(fh->raiz, y);
     // isolamos o y da raiz
 
     ndFHinsertFilho(x, y);
@@ -308,4 +308,62 @@ void fhUnion(tFH *fh, tFH *outra)
     return nova;
 }
 
-void fhDecreaseKey(tFH *fh, tNodeFH *node) {}
+/// @brief retira a da lista de filhos de b
+/// e joga a pra raiz
+/// @param fh uma fib Heap valida
+/// @param a um no da heap valido, que
+/// deve ser filho de b
+/// @param b um no da heap valido, que 
+/// perdera o filho a
+static void corte(tFH *fh, tNodeFH *a, tNodeFH *b){
+    if(!fh || !a || !b){
+        printf("dados invalidos em corte!\n");
+        exit(EXIT_FAILURE);
+    }
+    ndFHremoveFilho(b, a);
+    /*Essa funcao deve 
+    decrementar grau de b
+    setar o pai de a como null
+    definir "marcado" de a como false
+    */
+    ndFHinsert(fh->raiz, a);
+    
+}
+
+static void corteRec(tFH *fh, tNodeFH *node){
+    if(!fh || !node){
+        printf("dados invalidos em corteRec!\n");
+        exit(EXIT_FAILURE);
+    }
+    tNodeFH *n = ndFHgetPai(node);
+    if(n){
+        if(!(ndFHgetMarcado(n))){
+            ndFHsetMarcado(n, true);
+        }
+        else{
+            corte(fh, node, n);
+            corteRec(fh, n);
+        }
+    }
+
+}
+
+void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey){
+    if(!fh || !node){
+        printf("dados invalidos em fhDecreaseKey!\n");
+        exit(EXIT_FAILURE);
+    }
+    if(newKey > ndFHgetKey(node)) return;
+    ndFHsetKey(node, newKey);
+
+    tNodeFH *pai = ndFHgetPai(node);
+
+    if(pai && (ndFHgetKey(node) < ndFHgetKey(pai))){
+        corte(fh, node, pai);
+        corteRec(fh, pai);
+    }//subindo o filho
+
+    if(ndFHgetKey(node) < ndFHgetKey(fh->raiz)){
+        fh->min = node;
+    }//setando novo min se necessario
+}
