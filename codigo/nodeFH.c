@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "nodeFH.h"
+#include "tIterator.h"
 
 struct fibHeapNode
 {
     tVertice *vert;
     
-    tNodeFH *left, *right;// uma lista circular
+    tNodeFH *left, *right;//lista circular
     tNodeFH *pai;
     tNodeFH *filho; //pode ter mais de um, mas so aponta p um
 
@@ -32,7 +33,20 @@ tNodeFH *ndFHInit(tVertice *v){
     return newNode;
 }
 
-void ndFHdestroy(tNodeFH* nodeFH);
+void ndFHdestroy(tNodeFH* nodeFH){
+    if(!nodeFH) return;
+    
+    //chegando na folha (indo pra ponta da arvore)
+    ndFHdestroy(nodeFH->filho);
+
+    tNodeFH *pop, *aux = nodeFH->right;
+
+    do{//indo em largura (olhando os irmaos)
+        pop = aux;
+        aux = aux->right;
+        free(pop);
+    }while(aux != nodeFH);
+}
 
 void ndHFinsert(tNodeFH *lista, tNodeFH *novo){
     if(!lista || !novo){
@@ -43,18 +57,6 @@ void ndHFinsert(tNodeFH *lista, tNodeFH *novo){
     novo->left = lista->left;
     lista->left->right = novo;
     lista->left = novo;
-}
-
-void ndHFremove(tNodeFH *lista, tNodeFH *alvo);
-
-void ndHFiterator(tNodeFH *lista, tNodeFH *head);
-
-int ndFHgetKey(tNodeFH *nodeFH){
-    if(!nodeFH){
-        printf("Dados invalidos em ndFHgetKey!\n");
-        exit(EXIT_FAILURE);
-    }
-    return getAccVert(nodeFH->vert);
 }
 
 void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
@@ -74,3 +76,28 @@ void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
     (pai->grau)++;
     filho->pai = pai;
 }
+//Na verdade acho que so existe removeFliho
+void ndHFremove(tNodeFH *lista, tNodeFH *alvo){
+    if(!lista || !alvo){
+        printf("dados invalidos em ndFHremove!\n");
+        exit(EXIT_FAILURE);
+    }
+    if(lista->filho == lista->filho->right){
+        lista->filho = NULL;
+    }//pai c um filho so'
+    else if(lista->filho == alvo){
+        lista->filho = alvo->right;
+        alvo->right->pai = lista;
+    }
+    alvo->left->right = alvo->right;
+    alvo->right->left = alvo->left;
+}
+
+int ndFHgetKey(tNodeFH *nodeFH){
+    if(!nodeFH){
+        printf("Dados invalidos em ndFHgetKey!\n");
+        exit(EXIT_FAILURE);
+    }
+    return getAccVert(nodeFH->vert);
+}
+

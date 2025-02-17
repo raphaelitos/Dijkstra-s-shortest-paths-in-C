@@ -55,7 +55,11 @@ tFH *fhInit()
     return fh;
 }
 
-void fhDestroy(tFH *fh);
+void fhDestroy(tFH *fh){
+    if(!fh) return;
+    ndFHdestroy(fh->min);
+    ndFHdestroy(fh->raiz);
+}
 
 tNodeFH *fhInsert(tFH *fh, tVertice *vert)
 {

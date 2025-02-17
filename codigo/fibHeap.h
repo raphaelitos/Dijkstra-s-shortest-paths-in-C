@@ -21,14 +21,6 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
 
 void fhConsolidate(tFH *fh);
 
-//Vale refletir se sera necessario criar um ponteiro
-//fibnode em vertice para essa parte aqui
 void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey);
 
-
-/*
-PESQUISAR O ITERATE E ENTAO CONFERIR A TRADUCAO DO 
-CONSOLIDATE
-EXTRACTMIN
-*/
 #endif
