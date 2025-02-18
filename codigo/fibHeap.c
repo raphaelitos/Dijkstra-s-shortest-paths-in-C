@@ -13,7 +13,7 @@ struct fibHeap
     tNodeFH *raiz;
 };
 
-bool isNodeRoot(tFH *fh, tNodeFH *node)
+static bool isNodeRoot(tFH *fh, tNodeFH *node)
 {
     if (!fh || !node)
     {
@@ -23,22 +23,16 @@ bool isNodeRoot(tFH *fh, tNodeFH *node)
     return (fh->raiz == node);
 }
 
-void removeFromRoot(tFH *fh, tNodeFH *node)
+static void removeFromRoot(tFH *fh, tNodeFH *node)
 {
     if (!fh || !node)
     {
         printf("dados invalidos em removeFromRoot!\n");
         exit(EXIT_FAILURE);
     }
-    if (isNodeRoot(fh, node))
-        fh->raiz = ndFHgetRight(fh->raiz);
-    ndFHremove(fh->raiz, node);
-    // a operacao abaixo equivale a
-    // node.right.left = node.left
-    // Na verdade esse codigo deveria estar na ndFHremove e nao precisa
-    // de nada disso :((
-    ndFHsetLeft(ndFHgetRight(node), ndFHgetLeft(node));
-    ndFHsetRight(ndFHgetLeft(node), ndFHgetRight(node));
+    if(isNodeRoot(fh, node)) fh->raiz = ndFHgetRight(fh->raiz);
+    
+    ndFHremove(node);
 }
 
 tFH *fhInit()
@@ -71,14 +65,12 @@ tNodeFH *fhInsert(tFH *fh, tVertice *vert)
     tNodeFH *newNode = ndFHInit(vert);
 
     // inserindo o novo no na raiz
-    if (!(fh->raiz))
-        fh->raiz = newNode;
-    else
-        ndHFinsert(fh->raiz, newNode);
+    if (!(fh->raiz)) fh->raiz = newNode;
+    else ndFHinsert(fh->raiz, newNode);
 
-    if (!fh->min || getAccVert(vert) < getAccVert(fh->min))
+    if (!(fh->min) || getAccVert(vert) < getAccVert(ndFHgetVert(fh->min)))
     {
-        fh->min = vert;
+        fh->min = newNode;
     } // setando novo minimo se necessario
 
     (fh->qtdNos)++;
@@ -103,11 +95,10 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
         exit(EXIT_FAILURE);
     }
 
-    if (isNodeRoot(fh, y))
-        fh->raiz = ndFHgetRight(fh->raiz);
-    // REVISAR A FUNCAO DE REMOCAO
-    ndFHremove(fh->raiz, y);
-    // isolamos o y da raiz
+    removeFromRoot(fh, y);
+    ndFHsetLeft(y,y);
+    ndFHsetRight(y,y);
+    //y devidamente isolado
 
     ndFHinsertFilho(x, y);
     ndFHsetMarcado(y, false);
@@ -259,8 +250,8 @@ tNodeFH *fhExtractMin(tFH *fh)
                 ndFHsetPai(nodeVet[i], NULL);
             }//filhos de v adotados pela raiz
         }
-        //Seria o equivalente a "removeFromRoot, deve ser revisada!"
-        ndFHremove(fh->raiz, v);
+
+        removeFromRoot(fh, v);
 
         if(v == ndFHgetRight(v)){
             fh->min = NULL;
@@ -286,7 +277,7 @@ static tNodeFH *getUltimoFH(tFH *fh)
     return ndFHgetLeft(fh->raiz);
 }
 
-void fhUnion(tFH *fh, tFH *outra)
+tFH* fhUnion(tFH *fh, tFH *outra)
 {
     if (!fh || !outra)
     {
@@ -325,10 +316,10 @@ static void corte(tFH *fh, tNodeFH *a, tNodeFH *b){
         exit(EXIT_FAILURE);
     }
     ndFHremoveFilho(b, a);
-    /*Essa funcao deve 
-    decrementar grau de b
-    setar o pai de a como null
-    definir "marcado" de a como false
+    /*A funcao acima esta
+    decrementadno grau de b
+    setando pai de a como null
+    definindo "marcado" de a como false
     */
     ndFHinsert(fh->raiz, a);
     

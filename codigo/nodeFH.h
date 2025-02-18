@@ -13,13 +13,12 @@ void ndFHdestroy(tNodeFH* nodeFH);
 
 void ndFHinsert(tNodeFH *lista, tNodeFH *novo);
 
-void ndFHremove(tNodeFH *lista, tNodeFH *alvo);
+//Essa funcao basicamente isola um no
+void ndFHremove(tNodeFH *node);
 
 void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
 
 void ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
-
-void ndFHiterator(tNodeFH *lista, tNodeFH *head);
 
 //getters e setters
 
@@ -47,15 +46,12 @@ tNodeFH* ndFHgetFilho(tNodeFH *nodeFH);
 
 int ndFHgetGrau(tNodeFH *node);
 
-int ndFHgetGrau(tNodeFH *node);
-
 void ndFHsetGrau(tNodeFH *node, int grauNovo);
 
-int ndFHincGrau(tNodeFH *node);
+void ndFHincGrau(tNodeFH *node);
 
 bool ndFHgetMarcado(tNodeFH *node);
 
 void ndFHsetMarcado(tNodeFH *node, bool valor);
-
 
 #endif

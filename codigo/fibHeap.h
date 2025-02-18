@@ -15,7 +15,7 @@ tNodeFH* fhMinimum(tFH *fh);
 
 tNodeFH* fhExtractMin(tFH *fh);
 
-void fhUnion(tFH *fh, tFH *nova);
+tFH* fhUnion(tFH *fh, tFH *outra);
 
 void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
 
