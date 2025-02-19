@@ -14,15 +14,15 @@ void ndFHdestroy(tNodeFH* nodeFH);
 void ndFHinsert(tNodeFH *lista, tNodeFH *novo);
 
 //Essa funcao basicamente isola um no
-void ndFHremove(tNodeFH *node);
+tNodeFH* ndFHremove(tNodeFH *node);
 
 void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
 
-void ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
+tNodeFH* ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
 
 //getters e setters
 
-int ndFHgetKey(tNodeFH *nodeFH);
+float ndFHgetKey(tNodeFH *nodeFH);
 
 void ndFHsetKey(tNodeFH *nodeFH, int newKey);
 

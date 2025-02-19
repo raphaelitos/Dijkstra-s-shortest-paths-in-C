@@ -3,6 +3,8 @@
 #include <string.h>
 #include "nodeFH.h"
 
+typedef struct fibHeapNode tNodeFH;
+
 struct fibHeapNode
 {
     tVertice *vert;
@@ -32,42 +34,62 @@ tNodeFH *ndFHInit(tVertice *v){
     return newNode;
 }
 
+
+/**
+ * Isso aqui parece estar certo
+ * Nao sei se e' possivel otimizar as 
+ * chamadas de recursao
+ * mas parece estar certo :)
+ */
 void ndFHdestroy(tNodeFH* nodeFH){
     if(!nodeFH) return;
+
+    if(nodeFH->right != nodeFH){
+        tNodeFH *irmao = nodeFH->right;
+        tNodeFH *rm = ndFHremove(nodeFH);
+        
+        ndFHdestroy(irmao);
+        
+        ndFHdestroy(rm);
+    }
+
+    else if(nodeFH->filho){
+        ndFHdestroy(nodeFH->filho);
+    }
+
+    else{//sem filho e sem irmao
+        tNodeFH *pai = nodeFH->pai;
+        
+        free(nodeFH);
+        
+        ndFHdestroy(pai);//subindo na arvore
+    }
     
-    //chegando na folha (indo pra ponta da arvore)
-    ndFHdestroy(nodeFH->filho);
-
-    tNodeFH *pop, *aux = nodeFH->right;
-
-    do{//indo em largura (olhando os irmaos)
-        pop = aux;
-        aux = aux->right;
-        free(pop);
-    }while(aux != nodeFH);
 }
-
+//insere no final ('a esquerda de lista)
 void ndFHinsert(tNodeFH *lista, tNodeFH *novo){
     if(!lista || !novo){
         printf("Dados invalidos em ndFHinsert!\n");
         exit(EXIT_FAILURE);
     }
-    novo->right = lista->right;
+    novo->right = lista;
     novo->left = lista->left;
     lista->left->right = novo;
     lista->left = novo;
 }
 
-void ndFHremove(tNodeFH *node){
+tNodeFH* ndFHremove(tNodeFH *node){
     if(!node){
         printf("dados invalidos em ndfhInsertFilho!\n");
         exit(EXIT_FAILURE);
     }
     
+    if(node->right == node) return;
+
     node->left->right = node->right;
     node->right->left = node->left;    
 
-    //node->right = node->left = node;
+    node->right = node->left = node;
 }
 
 void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
@@ -77,37 +99,43 @@ void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
     }
     if(!(pai->filho)){
         pai->filho = filho;
-        return;
+        filho->right = filho;
+        filho->left = filho;
     }
-    filho->right = pai->filho->right;
-    filho->left = pai->filho;
-    pai->filho->right->left = filho;
-    pai->filho->right = filho;
-
+    else{
+        ndFHinsert(pai->filho, filho);
+    }
     (pai->grau)++;
     filho->pai = pai;
 }
-void ndFHremoveFilho(tNodeFH *lista, tNodeFH *filho){
+
+tNodeFH* ndFHremoveFilho(tNodeFH *lista, tNodeFH *filho){
     if(!lista || !filho){
         printf("dados invalidos em ndFHremove!\n");
         exit(EXIT_FAILURE);
     }
-    //pai c um filho so'
-    if(lista->filho == lista->filho->right){
-        lista->filho = NULL;
+    if(lista->filho == filho) {
+        if (filho->right == filho) { //Filho unico
+            lista->filho = NULL;
+        }
+        else {
+            lista->filho = filho->right;//novo filho
+        }
     }
-    else if(lista->filho == filho){
-        lista->filho = filho->right;
-        filho->right->pai = lista;
-    }
+    
     filho->left->right = filho->right;
     filho->right->left = filho->left;
-
+    filho->right = filho->left = filho;
+   
     filho->pai = NULL;
     filho->marcado = false;
+
+    (lista->grau)--;
+
+    return filho;
 }
 
-int ndFHgetKey(tNodeFH *nodeFH){
+float ndFHgetKey(tNodeFH *nodeFH){
     if(!nodeFH){
         printf("Dados invalidos em ndFHgetKey!\n");
         exit(EXIT_FAILURE);
