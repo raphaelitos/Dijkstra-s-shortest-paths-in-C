@@ -212,7 +212,7 @@ void DesalocaGrafo(tGrafo* grafo) {
 }
 
 void ImprimeGrafo(tGrafo* grafo) {
-    printf("node_%d\n", grafo->origem);
+    printf("%s\n", getNomeVert(grafo->origem));
 
     for(int i = 0; i < grafo->numVertices; i++) {
         printf("%s, ", getNomeVert(grafo->vertices[i]));
@@ -234,7 +234,6 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
     for(int i = 0; i < grafo->numVertices; i++)
         PQ_insert(pq, grafo->vertices[i]);
 }
-
 
 // Função de comparação para o qsort
 static int cmpVertice(const void *v1, const void *v2) {
