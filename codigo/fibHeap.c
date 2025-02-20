@@ -370,7 +370,7 @@ static void corteRec(tFH *fh, tNodeFH *node){
 
 }
 
-void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey){
+void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey){
     if(!fh || !node){
         printf("dados invalidos em fhDecreaseKey!\n");
         exit(EXIT_FAILURE);
