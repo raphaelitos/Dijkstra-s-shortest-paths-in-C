@@ -20,7 +20,7 @@ tVertice *criaVertice(const char *nome){
     if (!no) exit(EXIT_FAILURE);
     strcpy(no->nome, nome);
     no->adjacencias = NULL;
-    no->acc = INT_MAX; //valor padrão para vértices não visitados
+    no->acc = INT_MAX; //valor infinito, padrão para vértices não visitados
     no->pai = NULL;
     return no;
 }

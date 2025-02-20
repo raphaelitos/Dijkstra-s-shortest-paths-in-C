@@ -23,4 +23,6 @@ void fhConsolidate(tFH *fh);
 
 void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey);
 
+bool fhIsEmpty(tFH *fh);
+
 #endif

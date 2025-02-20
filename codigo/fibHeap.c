@@ -13,6 +13,14 @@ struct fibHeap
     tNodeFH *raiz;
 };
 
+static bool isNodeAlone(tNodeFH *node){
+    if(!node){
+        printf("dados invalidos em isNodeAlone!\n");
+        exit(EXIT_FAILURE);
+    }
+    return (node == ndFHgetRight(node));
+}
+
 static bool isNodeRoot(tFH *fh, tNodeFH *node)
 {
     if (!fh || !node)
@@ -30,9 +38,16 @@ static void removeFromRoot(tFH *fh, tNodeFH *node)
         printf("dados invalidos em removeFromRoot!\n");
         exit(EXIT_FAILURE);
     }
-    if(isNodeRoot(fh, node)) fh->raiz = ndFHgetRight(fh->raiz);
-    
+    if(isNodeRoot(fh, node)){
+        
+        (isNodeAlone(node))?
+        (fh->raiz = NULL) :
+        (fh->raiz = ndFHgetRight(fh->raiz));
+    }
+     
+
     ndFHremove(node);
+
 }
 
 tFH *fhInit()
@@ -51,8 +66,9 @@ tFH *fhInit()
 
 void fhDestroy(tFH *fh){
     if(!fh) return;
-    ndFHdestroy(fh->min);
+   
     ndFHdestroy(fh->raiz);
+    free(fh);
 }
 
 tNodeFH *fhInsert(tFH *fh, tVertice *vert)
@@ -68,7 +84,7 @@ tNodeFH *fhInsert(tFH *fh, tVertice *vert)
     if (!(fh->raiz)) fh->raiz = newNode;
     else ndFHinsert(fh->raiz, newNode);
 
-    if (!(fh->min) || getAccVert(vert) < getAccVert(ndFHgetVert(fh->min)))
+    if (!(fh->min) || (getAccVert(vert) <  ndFHgetKey(fh->min)))
     {
         fh->min = newNode;
     } // setando novo minimo se necessario
@@ -109,7 +125,7 @@ void fhConsolidate(tFH *fh){
     if (!fh)
     {
         printf("dados invalidos em fhConsolidate!\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     if (!(fh->raiz))
         return;
@@ -226,7 +242,7 @@ tNodeFH *fhExtractMin(tFH *fh)
             {
                 aux = ndFHgetRight(aux);
                 tam++;
-            } while (aux != fh->raiz);
+            } while (aux != filho);
 
             tNodeFH **nodeVet = malloc(tam * sizeof(tNodeFH *));
             if (!nodeVet)
@@ -236,15 +252,16 @@ tNodeFH *fhExtractMin(tFH *fh)
             }
 
             int i = 0;
-            aux = fh->raiz;
             do
             {
                 nodeVet[i] = aux;
                 i++;
                 aux = ndFHgetRight(aux);
-            } while (aux != fh->raiz);
+            } while (aux != filho);
             // dump encerrado
+            
             for(i = 0; i < tam; i++){
+                ndFHremove(nodeVet[i]);
                 if(!(fh->raiz)) fh->raiz = nodeVet[i];
                 else ndFHinsert(fh->raiz, nodeVet[i]);
                 ndFHsetPai(nodeVet[i], NULL);
@@ -253,12 +270,12 @@ tNodeFH *fhExtractMin(tFH *fh)
 
         removeFromRoot(fh, v);
 
-        if(v == ndFHgetRight(v)){
+        if(!(fh->raiz)){//acontece se v nao for pai de ngm
             fh->min = NULL;
             fh->raiz = NULL;
         }
         else{
-            fh->min = ndFHgetRight(v);
+            fh->min = fh->raiz;
             fhConsolidate(fh);
         }
         (fh->qtdNos)--;   
@@ -282,8 +299,12 @@ tFH* fhUnion(tFH *fh, tFH *outra)
     if (!fh || !outra)
     {
         printf("Dados invalidos em fhUnion!\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
+
+    if (!fh->raiz) return outra;
+    if (!outra->raiz) return fh;
+
     tFH *nova = fhInit();
     nova->raiz = fh->raiz;
 
@@ -299,6 +320,12 @@ tFH* fhUnion(tFH *fh, tFH *outra)
     ndFHsetRight(ndFHgetLeft(nova->raiz), nova->raiz);
 
     nova->qtdNos = fh->qtdNos + outra->qtdNos;
+
+    //zerando heaps originais
+    fh->raiz = fh->min = NULL;
+    fh->qtdNos = 0;
+    outra->raiz = outra->min = NULL;
+    outra->qtdNos = 0;
 
     return nova;
 }
@@ -349,6 +376,7 @@ void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey){
         exit(EXIT_FAILURE);
     }
     if(newKey > ndFHgetKey(node)) return;
+    
     ndFHsetKey(node, newKey);
 
     tNodeFH *pai = ndFHgetPai(node);
@@ -358,7 +386,15 @@ void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey){
         corteRec(fh, pai);
     }//subindo o filho
 
-    if(ndFHgetKey(node) < ndFHgetKey(fh->raiz)){
+    if(ndFHgetKey(node) < ndFHgetKey(fh->min)){
         fh->min = node;
     }//setando novo min se necessario
+}
+
+bool fhIsEmpty(tFH *fh){
+    if(!fh){
+        printf("dado invalido em fhIsEmpty!\n");
+        exit(EXIT_FAILURE);
+    }
+    return (fh->qtdNos == 0);
 }

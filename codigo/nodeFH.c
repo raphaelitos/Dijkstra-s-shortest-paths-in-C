@@ -3,8 +3,6 @@
 #include <string.h>
 #include "nodeFH.h"
 
-typedef struct fibHeapNode tNodeFH;
-
 struct fibHeapNode
 {
     tVertice *vert;
@@ -72,6 +70,12 @@ void ndFHinsert(tNodeFH *lista, tNodeFH *novo){
         printf("Dados invalidos em ndFHinsert!\n");
         exit(EXIT_FAILURE);
     }
+    
+    if(novo->right != novo){
+        printf("insercao problematica! No ja pertence a uma lista!\n");
+        return;
+    }
+
     novo->right = lista;
     novo->left = lista->left;
     lista->left->right = novo;

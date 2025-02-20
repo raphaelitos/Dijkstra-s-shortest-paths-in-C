@@ -7,9 +7,6 @@
 #include "tAresta.h"
 #include "listaGen.h"
 
-#ifndef INF
-#define INF INT_MAX
-#endif
 
 struct grafo
 {
