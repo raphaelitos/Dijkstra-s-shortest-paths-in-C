@@ -21,7 +21,7 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
 
 void fhConsolidate(tFH *fh);
 
-void fhDecreaseKey(tFH *fh, tNodeFH *node, int newKey);
+void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey);
 
 bool fhIsEmpty(tFH *fh);
 

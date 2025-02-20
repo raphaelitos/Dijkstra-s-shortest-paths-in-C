@@ -150,7 +150,7 @@ float ndFHgetKey(tNodeFH *nodeFH){
     return getAccVert(nodeFH->vert);
 }
 
-void ndFHsetKey(tNodeFH *nodeFH, int newKey){
+void ndFHsetKey(tNodeFH *nodeFH, float newKey){
     if(!nodeFH){
         printf("dado invalido em ndFHsetKey!\n");
         exit(EXIT_FAILURE);
