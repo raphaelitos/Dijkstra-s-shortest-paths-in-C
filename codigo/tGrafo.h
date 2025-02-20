@@ -1,3 +1,6 @@
+#ifndef _TGRAFO_H_
+#define _TGRAFO_H_
+
 #include "tVertice.h"
 #include "PQ.h"
 
@@ -18,3 +21,5 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq);
 void Dijkstra(tGrafo *g, tVertice *source);
 
 void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path);
+
+#endif

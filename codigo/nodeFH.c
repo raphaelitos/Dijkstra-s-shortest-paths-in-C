@@ -25,6 +25,9 @@ tNodeFH *ndFHInit(tVertice *v){
         printf("Falha na alocacao de tNodeFH!\n");
         exit(EXIT_FAILURE);
     }
+    
+    setNodeFHVert(v, newNode);
+
     newNode->vert = v;
     newNode->pai = newNode->filho = NULL;
     newNode->left = newNode->right = newNode;
@@ -44,11 +47,11 @@ void ndFHdestroy(tNodeFH* nodeFH){
 
     if(nodeFH->right != nodeFH){
         tNodeFH *irmao = nodeFH->right;
-        tNodeFH *rm = ndFHremove(nodeFH);
+        ndFHremove(nodeFH);
         
         ndFHdestroy(irmao);
         
-        ndFHdestroy(rm);
+        ndFHdestroy(nodeFH);
     }
 
     else if(nodeFH->filho){
@@ -82,7 +85,7 @@ void ndFHinsert(tNodeFH *lista, tNodeFH *novo){
     lista->left = novo;
 }
 
-tNodeFH* ndFHremove(tNodeFH *node){
+void ndFHremove(tNodeFH *node){
     if(!node){
         printf("dados invalidos em ndfhInsertFilho!\n");
         exit(EXIT_FAILURE);

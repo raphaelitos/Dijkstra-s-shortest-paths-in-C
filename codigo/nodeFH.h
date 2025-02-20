@@ -1,11 +1,12 @@
 #ifndef _FIB_HEAP_NODE_H_
 #define _FIB_HEAP_NODE_H_
 
-#include "tVertice.h"
 #include <stdbool.h>
+
 
 typedef struct fibHeapNode tNodeFH;
 
+#include "tVertice.h"
 
 tNodeFH *ndFHInit(tVertice *v);
 
@@ -14,7 +15,7 @@ void ndFHdestroy(tNodeFH* nodeFH);
 void ndFHinsert(tNodeFH *lista, tNodeFH *novo);
 
 //Essa funcao basicamente isola um no
-tNodeFH* ndFHremove(tNodeFH *node);
+void ndFHremove(tNodeFH *node);
 
 void ndFHinsertFilho(tNodeFH *nodeFH, tNodeFH *filho);
 

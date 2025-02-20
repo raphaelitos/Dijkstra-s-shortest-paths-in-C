@@ -1,9 +1,9 @@
 #ifndef _FIB_HEAP_
 #define _FIB_HEAP_
 
-#include "nodeFH.h"
-
 typedef struct fibHeap tFH;
+
+#include "nodeFH.h"
 
 tFH *fhInit();
 

@@ -3,7 +3,10 @@
 
 #include "listaGen.h"
 
+
 typedef struct vertice tVertice;
+
+#include "nodeFH.h"
 
 /// @brief cria um vertice
 /// @param nome o nome do novo vertice
@@ -47,6 +50,10 @@ float getAccVert(tVertice* v);
 void setPosHeapVert(tVertice* v, int posHeap);
 
 int getPosHeapVert(tVertice* v);
+
+tNodeFH *getNodeFHVert(tVertice *v);
+
+void setNodeFHVert(tVertice *v, tNodeFH *nodeFH);
 
 void imprimeVert(tVertice* v);
 
