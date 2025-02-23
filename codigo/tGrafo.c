@@ -305,8 +305,9 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
 }
 
 void fhInsereVertices(tGrafo* grafo, tFH* fh) {
-    for(int i = 0; i < grafo->numVertices; i++)
+    for(int i = 0; i < grafo->numVertices; i++){
         fhInsert(fh, grafo->vertices[i]);
+    }
 }
 
 void fibDijkstra(tGrafo *g, tVertice *source) {
@@ -315,17 +316,22 @@ void fibDijkstra(tGrafo *g, tVertice *source) {
         return;
     }
     
-    //int numVertices = GetSizeGrafo(g);
     tFH *fh = fhInit();
-    
+
     // A fonte tem distancia 0
     setAccVert(source, 0);
 
     fhInsereVertices(g, fh);
+    
+
 
     while (!fhIsEmpty(fh)) {
         // vertice com menor dist (acc)
-        tVertice *u = ndFHgetVert(fhExtractMin(fh));
+        tVertice *u = fhExtractMin(fh);
+        if(!u){
+            printf("o codigo vai quebrar\n");
+            exit(EXIT_FAILURE);
+        }
 
         // Percorre lista de adjacencias de u
         tListaGen *adj = getAdjVert(u);

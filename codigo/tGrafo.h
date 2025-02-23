@@ -20,6 +20,8 @@ void InsereVerticesPQ(tGrafo* grafo, PQ* pq);
 
 void Dijkstra(tGrafo *g, tVertice *source);
 
+void fibDijkstra(tGrafo *g, tVertice *source);
+
 void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path);
 
 #endif

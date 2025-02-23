@@ -92,7 +92,7 @@ tNodeFH *getNodeFHVert(tVertice *v){
 }
 
 void setNodeFHVert(tVertice *v, tNodeFH *nodeFH){
-    if(!v || !nodeFH){
+    if(!v){
         printf("dados invalidos em setNodeFHVert!\n");
         exit(EXIT_FAILURE);
     }
@@ -100,5 +100,9 @@ void setNodeFHVert(tVertice *v, tNodeFH *nodeFH){
 }
 
 void imprimeVert(tVertice* v) {
-    printf("%s [%s] %.2f\n", v->nome, getNomeVert(v->pai), v->acc);
+    if(!v){
+        printf("vertice invalido em imprime!\n");
+        exit(EXIT_FAILURE);
+    }
+    printf("%s [%s] %.2f", v->nome, getNomeVert(v->pai), v->acc);
 }

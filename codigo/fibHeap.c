@@ -13,8 +13,10 @@ struct fibHeap
     tNodeFH *raiz;
 };
 
-static bool isNodeAlone(tNodeFH *node){
-    if(!node){
+static bool isNodeAlone(tNodeFH *node)
+{
+    if (!node)
+    {
         printf("dados invalidos em isNodeAlone!\n");
         exit(EXIT_FAILURE);
     }
@@ -38,16 +40,22 @@ static void removeFromRoot(tFH *fh, tNodeFH *node)
         printf("dados invalidos em removeFromRoot!\n");
         exit(EXIT_FAILURE);
     }
-    if(isNodeRoot(fh, node)){
-        
-        (isNodeAlone(node))?
-        (fh->raiz = NULL) :
-        (fh->raiz = ndFHgetRight(fh->raiz));
+    if (isNodeRoot(fh, node))
+    {
+
+        (isNodeAlone(node)) ? (fh->raiz = NULL) : (fh->raiz = ndFHgetRight(fh->raiz));
     }
-     
 
+    if(!(fh->raiz)){
+        printf("heap ficou vazia!\n");
+        fh->min = NULL;
+    }
+    else{
+        printf("\nnova raiz: ");
+        imprimeVert(ndFHgetVert(fh->raiz));
+        printf("\n");
+    }
     ndFHremove(node);
-
 }
 
 tFH *fhInit()
@@ -64,9 +72,11 @@ tFH *fhInit()
     return fh;
 }
 
-void fhDestroy(tFH *fh){
-    if(!fh) return;
-   
+void fhDestroy(tFH *fh)
+{
+    if (!fh)
+        return;
+
     ndFHdestroy(fh->raiz);
     free(fh);
 }
@@ -81,12 +91,19 @@ tNodeFH *fhInsert(tFH *fh, tVertice *vert)
     tNodeFH *newNode = ndFHInit(vert);
 
     // inserindo o novo no na raiz
-    if (!(fh->raiz)) fh->raiz = newNode;
-    else ndFHinsert(fh->raiz, newNode);
+    if (!(fh->raiz))
+    {
+        fh->raiz = newNode;
+    }
+    else
+    {
+        ndFHinsert(fh->raiz, newNode);
+    }
 
-    if (!(fh->min) || (getAccVert(vert) <  ndFHgetKey(fh->min)))
+    if (!(fh->min) || (getAccVert(vert) < ndFHgetKey(fh->min)))
     {
         fh->min = newNode;
+        // printf("opa\n");
     } // setando novo minimo se necessario
 
     (fh->qtdNos)++;
@@ -111,20 +128,27 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
         exit(EXIT_FAILURE);
     }
 
+    printf("link entre ");
+    imprimeVert(ndFHgetVert(y));
+    printf(" e ");
+    imprimeVert(ndFHgetVert(x));
+    printf("\n");
+
     removeFromRoot(fh, y);
-    ndFHsetLeft(y,y);
-    ndFHsetRight(y,y);
-    //y devidamente isolado
+    ndFHsetLeft(y, y);
+    ndFHsetRight(y, y);
+    // y devidamente isolado
 
     ndFHinsertFilho(x, y);
     ndFHsetMarcado(y, false);
     // y e' filho de x agora
 }
 
-void fhConsolidate(tFH *fh){
+void fhConsolidate(tFH *fh)
+{
     if (!fh)
     {
-        printf("dados invalidos em fhConsolidate!\n");
+        printf("fh nula em Consolidate!\n");
         exit(EXIT_FAILURE);
     }
     if (!(fh->raiz))
@@ -136,7 +160,7 @@ void fhConsolidate(tFH *fh){
     eh dado pelo log da quantidade de nos multiplicado por dois
     */
     int grauMaximo = (int)(log(fh->qtdNos) * 2) + 1;
-    tNodeFH **auxVet = (tNodeFH **)calloc(grauMaximo, sizeof(tNodeFH *));
+    tNodeFH **auxVet = (tNodeFH **)malloc(grauMaximo * sizeof(tNodeFH *));
     if (!auxVet)
     {
         printf("falha na criacao de auxVet em fhConsolidate!\n");
@@ -146,7 +170,7 @@ void fhConsolidate(tFH *fh){
     {
         auxVet[k] = NULL;
     }
-    // construcao finalizada
+    // inicializacao finalizada
 
     /*dump da lista raiz para um vetor auxiliar nodeVet*/
     int tam = 0;
@@ -175,14 +199,22 @@ void fhConsolidate(tFH *fh){
     } while (aux != fh->raiz);
     // dump encerrado
 
+    tNodeFH *x = NULL;
+    int grau = 0;
+
     // consolidacao para cada no da raiz
     // basicamente, todo no que tiver o mesmo grau
     // vai terminar junto (fhLink)
     for (i = 0; i < tam; i++)
     {
-        tNodeFH *x = nodeVet[i];
-        int grau = ndFHgetGrau(x);
+        x = nodeVet[i];
+        grau = ndFHgetGrau(x);
+        printf("\ngrau de ");
+        imprimeVert(ndFHgetVert(x));
+        printf(" - %d\n", grau);
 
+        //enquanto nao achar uma casa nula, 
+        //o link acontece
         while (auxVet[grau] != NULL)
         {
             tNodeFH *y = auxVet[grau];
@@ -191,13 +223,14 @@ void fhConsolidate(tFH *fh){
                 tNodeFH *temp = x;
                 x = y;
                 y = temp;
-            }
+            }//troca x por y, pois x sera o pai
             fhLink(fh, y, x);
             auxVet[grau] = NULL;
             grau++;
         }
+    
         auxVet[grau] = x;
-    } // conslicao encerrada
+    } // consolidacao encerrada
 
     // Reconstrucao da lista raiz
     fh->raiz = NULL;
@@ -206,15 +239,17 @@ void fhConsolidate(tFH *fh){
     {
         if (auxVet[i] != NULL)
         {
+            ndFHsetLeft(auxVet[i], auxVet[i]);
+            ndFHsetRight(auxVet[i], auxVet[i]);
+            //isolando nos que estarao na raiz
             if (fh->raiz == NULL)
             {
                 fh->raiz = auxVet[i];
-                ndFHsetLeft(auxVet[i], auxVet[i]);
-                ndFHsetRight(auxVet[i], auxVet[i]);
                 fh->min = auxVet[i];
             }
             else
             {
+                printf("insercao na raiz em consolidate\n");
                 ndFHinsert(fh->raiz, auxVet[i]);
                 if (ndFHgetKey(auxVet[i]) < ndFHgetKey(fh->min))
                     fh->min = auxVet[i];
@@ -226,19 +261,34 @@ void fhConsolidate(tFH *fh){
     free(nodeVet);
 }
 
-tNodeFH *fhExtractMin(tFH *fh)
+tVertice *fhExtractMin(tFH *fh)
 {
+    if(!fh){
+        printf("fh nula em extractMin!\n");
+        exit(EXIT_FAILURE);
+    }
+    
     tNodeFH *v = fh->min;
+
+    if (!v)
+    {
+        printf("aiaiai...\n");
+        exit(EXIT_FAILURE);
+    }
 
     if (v)
     {
+        printf("no em extract: ");
+        imprimeVert(ndFHgetVert(v));
+        printf("\n");
         tNodeFH *filho = ndFHgetFilho(v);
         if (filho)
         {
             /*dump da lista de filhos para um vetor auxiliar nodeVet*/
+            printf("loop filho\n");
             int tam = 0;
             tNodeFH *aux = filho;
-            do
+            do  //obtendo o tamanho do vetor
             {
                 aux = ndFHgetRight(aux);
                 tam++;
@@ -259,29 +309,68 @@ tNodeFH *fhExtractMin(tFH *fh)
                 aux = ndFHgetRight(aux);
             } while (aux != filho);
             // dump encerrado
-            
-            for(i = 0; i < tam; i++){
+
+            for (i = 0; i < tam; i++)
+            {
+
                 ndFHremove(nodeVet[i]);
-                if(!(fh->raiz)) fh->raiz = nodeVet[i];
-                else ndFHinsert(fh->raiz, nodeVet[i]);
+
+                if (!(fh->raiz))
+                {
+                    fh->raiz = nodeVet[i];
+                }
+                else
+                {
+                    ndFHinsert(fh->raiz, nodeVet[i]);
+                }
                 ndFHsetPai(nodeVet[i], NULL);
-            }//filhos de v adotados pela raiz
+            } // filhos de v adotados pela raiz
+            free(nodeVet);
         }
 
         removeFromRoot(fh, v);
 
-        if(!(fh->raiz)){//acontece se v nao for pai de ngm
+        if (!(fh->raiz))
+        { // acontece se v nao for pai de ngm
             fh->min = NULL;
             fh->raiz = NULL;
+            printf("setando nulos para heap vazia\n");
         }
-        else{
+        else
+        {
             fh->min = fh->raiz;
+            printf("\nraiz antes de consolidate\n");
+            
+            tNodeFH *aux = fh->raiz;
+            
+            do{
+                imprimeVert(ndFHgetVert(aux));
+                printf("\n");
+                aux = ndFHgetRight(aux);
+            }while(aux != fh->raiz);
+            printf("------\n");
+            
             fhConsolidate(fh);
+            
+            printf("raiz apos consolidate\n");
+            aux = fh->raiz;
+            do{
+                imprimeVert(ndFHgetVert(aux));
+                printf("\n");
+                aux = ndFHgetRight(aux);
+            }while(aux != fh->raiz);
+            printf("------\n");
         }
-        (fh->qtdNos)--;   
-    }
+        (fh->qtdNos)--;
+        printf("qtdNos atual: %d\n", fh->qtdNos);
+        tVertice *aux = ndFHgetVert(v);
 
-    return v;
+        setNodeFHVert(aux, NULL);
+        free(v); // liberacao necessaria pois nao vamos usar mais essa estrutura
+    
+        return aux;
+    }
+    return NULL;
 }
 
 static tNodeFH *getUltimoFH(tFH *fh)
@@ -294,7 +383,7 @@ static tNodeFH *getUltimoFH(tFH *fh)
     return ndFHgetLeft(fh->raiz);
 }
 
-tFH* fhUnion(tFH *fh, tFH *outra)
+tFH *fhUnion(tFH *fh, tFH *outra)
 {
     if (!fh || !outra)
     {
@@ -302,8 +391,10 @@ tFH* fhUnion(tFH *fh, tFH *outra)
         exit(EXIT_FAILURE);
     }
 
-    if (!fh->raiz) return outra;
-    if (!outra->raiz) return fh;
+    if (!fh->raiz)
+        return outra;
+    if (!outra->raiz)
+        return fh;
 
     tFH *nova = fhInit();
     nova->raiz = fh->raiz;
@@ -321,7 +412,7 @@ tFH* fhUnion(tFH *fh, tFH *outra)
 
     nova->qtdNos = fh->qtdNos + outra->qtdNos;
 
-    //zerando heaps originais
+    // zerando heaps originais
     fh->raiz = fh->min = NULL;
     fh->qtdNos = 0;
     outra->raiz = outra->min = NULL;
@@ -335,10 +426,12 @@ tFH* fhUnion(tFH *fh, tFH *outra)
 /// @param fh uma fib Heap valida
 /// @param a um no da heap valido, que
 /// deve ser filho de b
-/// @param b um no da heap valido, que 
+/// @param b um no da heap valido, que
 /// perdera o filho a
-static void corte(tFH *fh, tNodeFH *a, tNodeFH *b){
-    if(!fh || !a || !b){
+static void corte(tFH *fh, tNodeFH *a, tNodeFH *b)
+{
+    if (!fh || !a || !b)
+    {
         printf("dados invalidos em corte!\n");
         exit(EXIT_FAILURE);
     }
@@ -349,50 +442,60 @@ static void corte(tFH *fh, tNodeFH *a, tNodeFH *b){
     definindo "marcado" de a como false
     */
     ndFHinsert(fh->raiz, a);
-    
 }
 
-static void corteRec(tFH *fh, tNodeFH *node){
-    if(!fh || !node){
+static void corteRec(tFH *fh, tNodeFH *node)
+{
+    if (!fh || !node)
+    {
         printf("dados invalidos em corteRec!\n");
         exit(EXIT_FAILURE);
     }
     tNodeFH *n = ndFHgetPai(node);
-    if(n){
-        if(!(ndFHgetMarcado(n))){
+    if (n)
+    {
+        if (!(ndFHgetMarcado(n)))
+        {
             ndFHsetMarcado(n, true);
         }
-        else{
+        else
+        {
             corte(fh, node, n);
             corteRec(fh, n);
         }
     }
-
 }
 
-void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey){
-    if(!fh || !node){
+void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey)
+{
+    if (!fh || !node)
+    {
         printf("dados invalidos em fhDecreaseKey!\n");
         exit(EXIT_FAILURE);
     }
-    if(newKey > ndFHgetKey(node)) return;
-    
+    if (newKey > ndFHgetKey(node))
+        return;
+
     ndFHsetKey(node, newKey);
 
     tNodeFH *pai = ndFHgetPai(node);
 
-    if(pai && (ndFHgetKey(node) < ndFHgetKey(pai))){
+    if (pai && (ndFHgetKey(node) < ndFHgetKey(pai)))
+    {
         corte(fh, node, pai);
         corteRec(fh, pai);
-    }//subindo o filho
+    } // subindo o filho
 
-    if(ndFHgetKey(node) < ndFHgetKey(fh->min)){
+    if (ndFHgetKey(node) < ndFHgetKey(fh->min))
+    {
         fh->min = node;
-    }//setando novo min se necessario
+    } // setando novo min se necessario
 }
 
-bool fhIsEmpty(tFH *fh){
-    if(!fh){
+bool fhIsEmpty(tFH *fh)
+{
+    if (!fh)
+    {
         printf("dado invalido em fhIsEmpty!\n");
         exit(EXIT_FAILURE);
     }

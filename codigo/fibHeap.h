@@ -13,11 +13,11 @@ tNodeFH* fhInsert(tFH *fh, tVertice *vert);
 
 tNodeFH* fhMinimum(tFH *fh);
 
-tNodeFH* fhExtractMin(tFH *fh);
+tVertice* fhExtractMin(tFH *fh);
 
 tFH* fhUnion(tFH *fh, tFH *outra);
 
-void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x);
+void fhLink(tFH *fh, tNodeFH *filho, tNodeFH *pai);
 
 void fhConsolidate(tFH *fh);
 

@@ -26,6 +26,7 @@ tNodeFH *ndFHInit(tVertice *v){
         exit(EXIT_FAILURE);
     }
     
+    //criando a via de mao dupla
     setNodeFHVert(v, newNode);
 
     newNode->vert = v;
@@ -74,8 +75,10 @@ void ndFHinsert(tNodeFH *lista, tNodeFH *novo){
         exit(EXIT_FAILURE);
     }
     
-    if(novo->right != novo){
+    if((novo->right) != novo){
         printf("insercao problematica! No ja pertence a uma lista!\n");
+        printf("no %s seria inserido em %s\n", 
+        getNomeVert(novo->vert), getNomeVert(lista->vert));
         return;
     }
 
