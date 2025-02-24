@@ -394,24 +394,27 @@ static void corte(tFH *fh, tNodeFH *a, tNodeFH *b)
     ndFHinsert(fh->raiz, a);
 }
 
-static void corteRec(tFH *fh, tNodeFH *node)
+static void corteRec(tFH *fh, tNodeFH *y)
 {
-    if (!fh || !node)
+    if (!fh || !y)
     {
-        printf("dados invalidos em corteRec!\n");
+        printf("dados inválidos em corteRec!\n");
         exit(EXIT_FAILURE);
     }
-    tNodeFH *n = ndFHgetPai(node);
-    if (n)
+
+    tNodeFH *z = ndFHgetPai(y);
+    if (z != NULL)
     {
-        if (!(ndFHgetMarcado(n)))
+        // Se 'y' não estava marcado, marca-o e para por aqui.
+        if (!ndFHgetMarcado(y))
         {
-            ndFHsetMarcado(n, true);
+            ndFHsetMarcado(y, true);
         }
+        // Caso já estivesse marcado, corta 'y' de seu pai e propaga o corte.
         else
         {
-            corte(fh, node, n);
-            corteRec(fh, n);
+            corte(fh, y, z);
+            corteRec(fh, z);
         }
     }
 }

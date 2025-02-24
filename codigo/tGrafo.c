@@ -328,10 +328,6 @@ void fibDijkstra(tGrafo *g, tVertice *source) {
     while (!fhIsEmpty(fh)) {
         // vertice com menor dist (acc)
         tVertice *u = fhExtractMin(fh);
-        if(!u){
-            printf("o codigo vai quebrar\n");
-            exit(EXIT_FAILURE);
-        }
 
         // Percorre lista de adjacencias de u
         tListaGen *adj = getAdjVert(u);
