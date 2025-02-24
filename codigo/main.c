@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     
     if(argc <= 2){
-        printf("eh");
+        printf("Forneca um caminho valido para o arquivo de entrada e outro para o de saida!\n");
         return 0;
     }
     
@@ -18,12 +18,12 @@ int main(int argc, char *argv[])
     tVertice *src = getOrigemGrafo(grafo);
     
     if(!src){
-        printf("viixiiii :((");
+        printf("src nulo :(");
         DesalocaGrafo(grafo);
         return 0;
     }
 
-    Dijkstra(grafo, src);
+    fibDijkstra(grafo, src);
 
     ImprimeCaminhosMenorCusto(grafo, src, argv[2]);
 

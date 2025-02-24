@@ -46,15 +46,6 @@ static void removeFromRoot(tFH *fh, tNodeFH *node)
         (isNodeAlone(node)) ? (fh->raiz = NULL) : (fh->raiz = ndFHgetRight(fh->raiz));
     }
 
-    if(!(fh->raiz)){
-        printf("heap ficou vazia!\n");
-        fh->min = NULL;
-    }
-    else{
-        printf("\nnova raiz: ");
-        imprimeVert(ndFHgetVert(fh->raiz));
-        printf("\n");
-    }
     ndFHremove(node);
 }
 
@@ -127,12 +118,6 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
         printf("dados invalidos em fhLink");
         exit(EXIT_FAILURE);
     }
-
-    printf("link entre ");
-    imprimeVert(ndFHgetVert(y));
-    printf(" e ");
-    imprimeVert(ndFHgetVert(x));
-    printf("\n");
 
     removeFromRoot(fh, y);
     ndFHsetLeft(y, y);
@@ -209,9 +194,6 @@ void fhConsolidate(tFH *fh)
     {
         x = nodeVet[i];
         grau = ndFHgetGrau(x);
-        printf("\ngrau de ");
-        imprimeVert(ndFHgetVert(x));
-        printf(" - %d\n", grau);
 
         //enquanto nao achar uma casa nula, 
         //o link acontece
@@ -249,7 +231,6 @@ void fhConsolidate(tFH *fh)
             }
             else
             {
-                printf("insercao na raiz em consolidate\n");
                 ndFHinsert(fh->raiz, auxVet[i]);
                 if (ndFHgetKey(auxVet[i]) < ndFHgetKey(fh->min))
                     fh->min = auxVet[i];
@@ -270,107 +251,76 @@ tVertice *fhExtractMin(tFH *fh)
     
     tNodeFH *v = fh->min;
 
-    if (!v)
-    {
-        printf("aiaiai...\n");
-        exit(EXIT_FAILURE);
-    }
+    if(!v) return NULL;
 
-    if (v)
-    {
-        printf("no em extract: ");
-        imprimeVert(ndFHgetVert(v));
-        printf("\n");
-        tNodeFH *filho = ndFHgetFilho(v);
-        if (filho)
-        {
-            /*dump da lista de filhos para um vetor auxiliar nodeVet*/
-            printf("loop filho\n");
-            int tam = 0;
-            tNodeFH *aux = filho;
-            do  //obtendo o tamanho do vetor
-            {
-                aux = ndFHgetRight(aux);
-                tam++;
-            } while (aux != filho);
-
-            tNodeFH **nodeVet = malloc(tam * sizeof(tNodeFH *));
-            if (!nodeVet)
-            {
-                printf("falha na alocacao de nodeVet em fhExtractMin!\n");
-                exit(EXIT_FAILURE);
-            }
-
-            int i = 0;
-            do
-            {
-                nodeVet[i] = aux;
-                i++;
-                aux = ndFHgetRight(aux);
-            } while (aux != filho);
-            // dump encerrado
-
-            for (i = 0; i < tam; i++)
-            {
-
-                ndFHremove(nodeVet[i]);
-
-                if (!(fh->raiz))
-                {
-                    fh->raiz = nodeVet[i];
-                }
-                else
-                {
-                    ndFHinsert(fh->raiz, nodeVet[i]);
-                }
-                ndFHsetPai(nodeVet[i], NULL);
-            } // filhos de v adotados pela raiz
-            free(nodeVet);
-        }
-
-        removeFromRoot(fh, v);
-
-        if (!(fh->raiz))
-        { // acontece se v nao for pai de ngm
-            fh->min = NULL;
-            fh->raiz = NULL;
-            printf("setando nulos para heap vazia\n");
-        }
-        else
-        {
-            fh->min = fh->raiz;
-            printf("\nraiz antes de consolidate\n");
-            
-            tNodeFH *aux = fh->raiz;
-            
-            do{
-                imprimeVert(ndFHgetVert(aux));
-                printf("\n");
-                aux = ndFHgetRight(aux);
-            }while(aux != fh->raiz);
-            printf("------\n");
-            
-            fhConsolidate(fh);
-            
-            printf("raiz apos consolidate\n");
-            aux = fh->raiz;
-            do{
-                imprimeVert(ndFHgetVert(aux));
-                printf("\n");
-                aux = ndFHgetRight(aux);
-            }while(aux != fh->raiz);
-            printf("------\n");
-        }
-        (fh->qtdNos)--;
-        printf("qtdNos atual: %d\n", fh->qtdNos);
-        tVertice *aux = ndFHgetVert(v);
-
-        setNodeFHVert(aux, NULL);
-        free(v); // liberacao necessaria pois nao vamos usar mais essa estrutura
     
-        return aux;
+    tNodeFH *filho = ndFHgetFilho(v);
+    if (filho)
+    {
+        /*dump da lista de filhos para um vetor auxiliar nodeVet*/
+        int tam = 0;
+        tNodeFH *aux = filho;
+        do  //obtendo o tamanho do vetor
+        {
+            aux = ndFHgetRight(aux);
+            tam++;
+        } while (aux != filho);
+
+        tNodeFH **nodeVet = malloc(tam * sizeof(tNodeFH *));
+        if (!nodeVet)
+        {
+            printf("falha na alocacao de nodeVet em fhExtractMin!\n");
+            exit(EXIT_FAILURE);
+        }
+
+        int i = 0;
+        do
+        {
+            nodeVet[i] = aux;
+            i++;
+            aux = ndFHgetRight(aux);
+        } while (aux != filho);
+        // dump encerrado
+
+        for (i = 0; i < tam; i++)
+        {
+
+            ndFHremove(nodeVet[i]);
+
+            if (!(fh->raiz))
+            {
+                fh->raiz = nodeVet[i];
+            }
+            else
+            {
+                ndFHinsert(fh->raiz, nodeVet[i]);
+            }
+            ndFHsetPai(nodeVet[i], NULL);
+        } // filhos de v adotados pela raiz
+        free(nodeVet);
     }
-    return NULL;
+
+    removeFromRoot(fh, v);
+
+    if (!(fh->raiz))
+    { // acontece se v nao for pai de ngm
+        fh->min = NULL;
+        fh->raiz = NULL;
+    }
+    else
+    {
+        fh->min = fh->raiz;
+        fhConsolidate(fh);
+    }
+    (fh->qtdNos)--;
+
+    tVertice *aux = ndFHgetVert(v);
+
+    setNodeFHVert(aux, NULL);
+    free(v); // liberacao necessaria pois nao vamos usar mais essa estrutura
+
+    return aux;
+    
 }
 
 static tNodeFH *getUltimoFH(tFH *fh)
