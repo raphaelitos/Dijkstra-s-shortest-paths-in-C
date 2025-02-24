@@ -13,6 +13,7 @@ struct vertice{
     tVertice* pai;
     float acc;
     int posHeap;
+    tNodeFH *nodeFH;
 };
 
 tVertice *criaVertice(const char *nome){
@@ -20,8 +21,9 @@ tVertice *criaVertice(const char *nome){
     if (!no) exit(EXIT_FAILURE);
     strcpy(no->nome, nome);
     no->adjacencias = NULL;
-    no->acc = INT_MAX; //valor padrão para vértices não visitados
+    no->acc = INT_MAX; //valor infinito, padrão para vértices não visitados
     no->pai = NULL;
+    no->nodeFH = NULL;
     return no;
 }
 
@@ -81,6 +83,26 @@ int getPosHeapVert(tVertice* v) {
     return v->posHeap;
 }
 
+tNodeFH *getNodeFHVert(tVertice *v){
+    if(!v){
+        printf("dados invalidos em getNodeFHVert!\n");
+        exit(EXIT_FAILURE);
+    }
+    return v->nodeFH;
+}
+
+void setNodeFHVert(tVertice *v, tNodeFH *nodeFH){
+    if(!v){
+        printf("dados invalidos em setNodeFHVert!\n");
+        exit(EXIT_FAILURE);
+    }
+    v->nodeFH = nodeFH;
+}
+
 void imprimeVert(tVertice* v) {
-    printf("%s [%s] %.2f\n", v->nome, getNomeVert(v->pai), v->acc);
+    if(!v){
+        printf("vertice invalido em imprime!\n");
+        exit(EXIT_FAILURE);
+    }
+    printf("%s [%s] %.2f", v->nome, getNomeVert(v->pai), v->acc);
 }

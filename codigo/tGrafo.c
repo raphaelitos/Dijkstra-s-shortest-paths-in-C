@@ -7,10 +7,8 @@
 #include "tVertice.h"
 #include "tAresta.h"
 #include "listaGen.h"
+#include "fibHeap.h"
 
-#ifndef INF
-#define INF INT_MAX
-#endif
 
 struct grafo
 {
@@ -344,4 +342,50 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
     }
 
     fclose(arquivo);
+}
+
+void fhInsereVertices(tGrafo* grafo, tFH* fh) {
+    for(int i = 0; i < grafo->numVertices; i++){
+        fhInsert(fh, grafo->vertices[i]);
+    }
+}
+
+void fibDijkstra(tGrafo *g, tVertice *source) {
+    if(!g || !source){
+        printf("Dados invalidos para Dijkstra!");
+        return;
+    }
+    
+    tFH *fh = fhInit();
+
+    // A fonte tem distancia 0
+    setAccVert(source, 0);
+
+    fhInsereVertices(g, fh);
+    
+
+
+    while (!fhIsEmpty(fh)) {
+        // vertice com menor dist (acc)
+        tVertice *u = fhExtractMin(fh);
+
+        // Percorre lista de adjacencias de u
+        tListaGen *adj = getAdjVert(u);
+        for (tListaGen *aux = adj; aux != NULL; aux = getProxListaGen(aux)) {
+            tAresta *aresta = (tAresta*) getInfoListaGen(aux);
+            tVertice *v = getDestinoAresta(aresta); 
+            
+            float peso = getPesoAresta(aresta);
+            float alt = getAccVert(u) + peso; 
+            
+            if (alt < getAccVert(v)) {
+                //Atualiza o pai e a fh
+                setPaiVert(v, u);
+                fhDecreaseKey(fh, getNodeFHVert(v), alt);
+            }
+
+        }
+    }
+
+    fhDestroy(fh);
 }
