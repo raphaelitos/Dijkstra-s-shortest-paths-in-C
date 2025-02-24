@@ -6,11 +6,19 @@
 int main(int argc, char *argv[])
 {
     tGrafo *grafo = GrafoInit(argv[1]);
-    PQ* pq = PQ_create(GetSizeGrafo(grafo));
+    
+    tVertice *src = getOrigemGrafo(grafo);
+    
+    if(!src){
+        printf("viixiiii :((");
+        DesalocaGrafo(grafo);
+        return 0;
+    }
 
-    InsereVerticesPQ(grafo, pq);
+    Dijkstra(grafo, src);
 
-    PQ_destroy(pq);
+    ImprimeCaminhosMenorCusto(grafo, src, argv[1]);
+
     DesalocaGrafo(grafo);
 
     return 0;

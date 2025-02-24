@@ -42,7 +42,7 @@ void setAccVert(tVertice* v, int acc);
 /// @brief retorna o inteiro correspondente ao valor acumulado de v
 /// @param v o vértice que terá seu valor retornado
 /// @return o inteiro correspondente
-int getAccVert(tVertice* v);
+float getAccVert(tVertice* v);
 
 void setPosHeapVert(tVertice* v, int posHeap);
 
