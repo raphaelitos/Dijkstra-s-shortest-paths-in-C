@@ -4,6 +4,8 @@
 #include "tAresta.h"
 #include "PQ.h"
 
+extern void InsereVerticesPQ(tGrafo *, PQ*);
+
 void Dijkstra(tGrafo *g, tVertice *source) {
     if(!g || !source){
         printf("Dados invalidos para Dijkstra!");

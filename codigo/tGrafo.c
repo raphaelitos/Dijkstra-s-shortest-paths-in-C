@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+
 #include "tGrafo.h"
 #include "tAresta.h"
-#include "listaGen.h"
+#include "fibHeap.h"
+#include "PQ.h"
 
 
 struct grafo
@@ -178,9 +180,9 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
             continue; 
         }
 
-        //fprintf(arquivo, "SHORTEST PATH TO %s: ", getNomeVert(v));
+        fprintf(arquivo, "SHORTEST PATH TO %s: ", getNomeVert(v));
 
-        //ImprimeCaminho(arquivo, v, getOrigemGrafo(grafo));
+        ImprimeCaminho(arquivo, v, getOrigemGrafo(grafo));
 
         fprintf(arquivo, " (Distance: %.2f)\n", dist);
     }
@@ -188,6 +190,10 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
     fclose(arquivo);
 }
 
+/**
+ * teste teste
+ * @param grafo um grafo lol
+ */
 void fhInsereVertices(tGrafo* grafo, tFH* fh) {
     for(int i = 0; i < grafo->numVertices; i++){
         fhInsert(fh, grafo->vertices[i]);

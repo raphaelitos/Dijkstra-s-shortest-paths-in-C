@@ -4,7 +4,9 @@
 #include "tAresta.h"
 #include "fibHeap.h"
 
-void fibDijkstra(tGrafo *g, tVertice *source) {
+extern void fhInsereVertices(tGrafo *, tFH*);
+
+void Dijkstra(tGrafo *g, tVertice *source) {
     if(!g || !source){
         printf("Dados invalidos para Dijkstra!");
         return;

@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tGrafo.h"
-#include "PQ.h"
-#include "fibHeap.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +21,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    fibDijkstra(grafo, src);
+    Dijkstra(grafo, src);
 
     ImprimeCaminhosMenorCusto(grafo, src, argv[2]);
 
