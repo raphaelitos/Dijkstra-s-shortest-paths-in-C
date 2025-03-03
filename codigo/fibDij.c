@@ -4,7 +4,17 @@
 #include "tAresta.h"
 #include "fibHeap.h"
 
-extern void fhInsereVertices(tGrafo *, tFH*);
+
+void fhInsereVertices(tGrafo* grafo, tFH* fh) {
+    if(!grafo || !fh){
+        printf("dados invalidos em insereverticesPQ\n");
+        exit(EXIT_FAILURE);
+    }
+    tVertice **vet = getVerticesGrafo(grafo);
+    int tam = getNumVerticesGrafo(grafo);
+    for(int i = 0; i < tam; i++)
+        fhInsert(fh, vet[i]);
+}
 
 void Dijkstra(tGrafo *g, tVertice *source) {
     if(!g || !source){
@@ -12,10 +22,10 @@ void Dijkstra(tGrafo *g, tVertice *source) {
         return;
     }
     
-    tFH *fh = fhInit();
-
     // A fonte tem distancia 0
     setAccVert(source, 0);
+
+    tFH *fh = fhInit();
 
     fhInsereVertices(g, fh);
     

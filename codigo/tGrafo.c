@@ -5,8 +5,6 @@
 
 #include "tGrafo.h"
 #include "tAresta.h"
-#include "fibHeap.h"
-#include "PQ.h"
 
 
 struct grafo
@@ -119,9 +117,20 @@ tVertice *getOrigemGrafo(tGrafo *g){
     return g->origem;
 }
 
-void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
-    for(int i = 0; i < grafo->numVertices; i++)
-        PQ_insert(pq, grafo->vertices[i]);
+tVertice **getVerticesGrafo(tGrafo *g){
+    if(!g){
+        printf("grafo invalido em getVertices\n");
+        exit(EXIT_FAILURE);
+    }
+    return g->vertices;
+}
+
+int getNumVerticesGrafo(tGrafo *g){
+    if(!g){
+        printf("grafo invalido em getNumVertices\n");
+        exit(EXIT_FAILURE);
+    }
+    return g->numVertices;
 }
 
 // Função de comparação para o qsort
@@ -188,14 +197,4 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
     }
 
     fclose(arquivo);
-}
-
-/**
- * teste teste
- * @param grafo um grafo lol
- */
-void fhInsereVertices(tGrafo* grafo, tFH* fh) {
-    for(int i = 0; i < grafo->numVertices; i++){
-        fhInsert(fh, grafo->vertices[i]);
-    }
 }

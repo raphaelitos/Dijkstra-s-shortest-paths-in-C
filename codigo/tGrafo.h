@@ -15,13 +15,11 @@ int GetSizeGrafo(tGrafo* grafo);
 
 tVertice *getOrigemGrafo(tGrafo *g);
 
-//void InsereVerticesPQ(tGrafo* grafo, PQ* pq);
+tVertice **getVerticesGrafo(tGrafo *g);
 
-//void fhInsereVertices(tGrafo* grafo, tFH* fh);
+int getNumVerticesGrafo(tGrafo *g);
 
 void Dijkstra(tGrafo *g, tVertice *source);
-
-void fibDijkstra(tGrafo *g, tVertice *source);
 
 void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path);
 

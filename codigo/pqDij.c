@@ -4,7 +4,17 @@
 #include "tAresta.h"
 #include "PQ.h"
 
-extern void InsereVerticesPQ(tGrafo *, PQ*);
+
+void InsereVerticesPQ(tGrafo* grafo, PQ* pq) {
+    if(!grafo || !pq){
+        printf("dados invalidos em insereverticesPQ\n");
+        exit(EXIT_FAILURE);
+    }
+    tVertice **vet = getVerticesGrafo(grafo);
+    int tam = getNumVerticesGrafo(grafo);
+    for(int i = 0; i < tam; i++)
+        PQ_insert(pq, vet[i]);
+}
 
 void Dijkstra(tGrafo *g, tVertice *source) {
     if(!g || !source){
