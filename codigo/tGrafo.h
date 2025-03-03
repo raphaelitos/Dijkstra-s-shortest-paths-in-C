@@ -3,6 +3,7 @@
 
 #include "tVertice.h"
 #include "PQ.h"
+#include "fibHeap.h"
 
 typedef struct grafo tGrafo;
 
@@ -17,6 +18,8 @@ int GetSizeGrafo(tGrafo* grafo);
 tVertice *getOrigemGrafo(tGrafo *g);
 
 void InsereVerticesPQ(tGrafo* grafo, PQ* pq);
+
+void fhInsereVertices(tGrafo* grafo, tFH* fh);
 
 void Dijkstra(tGrafo *g, tVertice *source);
 
