@@ -7,13 +7,15 @@
 
 #define TAM_MAX_NOME 101
 
+/// @brief Representa o vertice de um grafo
+/// dirigido ponderado
 struct vertice{
-    char nome[TAM_MAX_NOME];
+    char nome[TAM_MAX_NOME]; // Rotulo
     tListaGen *adjacencias; // Lista genérica contendo arestas
-    tVertice* pai;
-    float acc;
-    int posHeap;
-    tNodeFH *nodeFH;
+    tVertice* pai; // predecessor no caminho minimo
+    float acc; // distancia ate o vertice fonte
+    int posHeap; // posicao na heap binaria
+    tNodeFH *nodeFH; // representante na heap fibonacci
 };
 
 tVertice *criaVertice(const char *nome){

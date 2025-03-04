@@ -3,8 +3,14 @@
 #include <string.h>
 #include "tAresta.h"
 
+/// @brief Representa uma aresta de um
+/// grafo dirigido ponderado
 struct aresta{
+    // onde a aresta incide
     tVertice* destino;
+    // custo para chegar ao destino 
+    // saindo do vertice que possui a aresta
+    // em sua lista de adjacencias
     float peso;      
 };
 

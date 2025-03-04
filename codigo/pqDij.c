@@ -22,7 +22,7 @@ void Dijkstra(tGrafo *g, tVertice *source) {
         return;
     }
     
-    int numVertices = GetSizeGrafo(g);
+    int numVertices = getNumVerticesGrafo(g);
     PQ *pq = PQ_create(numVertices);
     
     // A fonte tem distancia 0
