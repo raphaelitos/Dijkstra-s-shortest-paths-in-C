@@ -4,12 +4,21 @@
 #include "fibHeap.h"
 #include <math.h>
 
+/// @brief Representa uma Heap Fibonacci.
+/// Estrutura adaptada de:
+/// https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
 struct fibHeap
 {
+    // numero de nos na heap
     int qtdNos;
 
+    // no que representa o vertice
+    // com menor distancia a origem
     tNodeFH *min;
 
+    // lista circular que guarda os nos que 
+    // enraizam os outros, cada um desses nos
+    // e' uma arvore ordenada com min-heap 
     tNodeFH *raiz;
 };
 
@@ -111,7 +120,7 @@ tNodeFH *fhMinimum(tFH *fh)
     return fh->min;
 }
 
-void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
+static void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
 {
     if (!fh || !y || !x)
     {
@@ -129,7 +138,7 @@ void fhLink(tFH *fh, tNodeFH *y, tNodeFH *x)
     // y e' filho de x agora
 }
 
-void fhConsolidate(tFH *fh)
+static void fhConsolidate(tFH *fh)
 {
     if (!fh)
     {
