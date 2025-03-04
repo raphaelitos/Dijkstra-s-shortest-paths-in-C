@@ -7,10 +7,16 @@
 #include "tAresta.h"
 
 
+/// @brief Representa um grafo dirigido
+/// ponderado
 struct grafo
 {
+    // vetor de vertices do grafo
     tVertice **vertices;
+    // origem do menor caminho aos
+    // outros vertices do grafo
     tVertice* origem;
+    // quantidade de vertices do grafo
     int numVertices;
 };
 
@@ -108,10 +114,6 @@ void ImprimeGrafo(tGrafo* grafo) {
     }
 }
 
-int GetSizeGrafo(tGrafo* grafo) {
-    return grafo->numVertices;
-}
-
 tVertice *getOrigemGrafo(tGrafo *g){
     if(!g) return NULL;
     return g->origem;
@@ -178,7 +180,7 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
         exit(EXIT_FAILURE);
     }
 
-    int numVertices = GetSizeGrafo(grafo);
+    int numVertices = grafo->numVertices;
 
     for (int i = 0; i < numVertices; i++) {
         tVertice *v = grafo->vertices[i];

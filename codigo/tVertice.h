@@ -12,6 +12,8 @@ typedef struct vertice tVertice;
 /// @return o vertice criado
 tVertice *criaVertice(const char *nome);
 
+/// @brief libera a memoria usada por v
+/// @param v um vertice valido
 void apagaVertice(tVertice* v);
 
 /// @brief cria a "aresta" de v ao vizinho

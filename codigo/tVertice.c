@@ -7,7 +7,8 @@
 
 #define TAM_MAX_NOME 101
 
-/// @brief Ilustra o vertice de um grafo
+/// @brief Representa o vertice de um grafo
+/// dirigido ponderado
 struct vertice{
     char nome[TAM_MAX_NOME]; // Rotulo
     tListaGen *adjacencias; // Lista genérica contendo arestas
