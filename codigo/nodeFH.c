@@ -3,16 +3,27 @@
 #include <string.h>
 #include "nodeFH.h"
 
+/// @brief representa o no' de uma
+/// heap fibonacci
 struct fibHeapNode
 {
-    tVertice *vert;
+    // vertice representado
+    tVertice *vert; 
     
-    tNodeFH *left, *right;//lista circular
+    // lista circular de irmaos
+    tNodeFH *left, *right;
+    
+    // predecessor na fib heap
     tNodeFH *pai;
-    tNodeFH *filho; //pode ter mais de um, mas so aponta p um
+    
+    //pode ter mais de um, mas so aponta p um
+    tNodeFH *filho; 
 
-    bool marcado; //auxiliar para FibHeap
-    int grau; //n de filhos
+    //auxiliar para corte em cascata
+    bool marcado; 
+    
+    //n de filhos
+    int grau; 
 };
 
 tNodeFH *ndFHInit(tVertice *v){
@@ -36,13 +47,6 @@ tNodeFH *ndFHInit(tVertice *v){
     return newNode;
 }
 
-
-/**
- * Isso aqui parece estar certo
- * Nao sei se e' possivel otimizar as 
- * chamadas de recursao
- * mas parece estar certo :)
- */
 void ndFHdestroy(tNodeFH* nodeFH){
     if(!nodeFH) return;
 
@@ -68,7 +72,7 @@ void ndFHdestroy(tNodeFH* nodeFH){
     }
     
 }
-//insere no final ('a esquerda de lista)
+
 void ndFHinsert(tNodeFH *lista, tNodeFH *novo){
     if(!lista || !novo){
         printf("Dados invalidos em ndFHinsert!\n");
@@ -120,7 +124,7 @@ void ndFHinsertFilho(tNodeFH *pai, tNodeFH *filho){
 }
 
 tNodeFH* ndFHremoveFilho(tNodeFH *lista, tNodeFH *filho){
-    if(!lista || !filho){
+    if(!lista || !filho || (filho->pai != lista)){
         printf("dados invalidos em ndFHremove!\n");
         exit(EXIT_FAILURE);
     }
@@ -239,22 +243,6 @@ int ndFHgetGrau(tNodeFH *node){
         exit(EXIT_FAILURE);
     }
     return node->grau;
-}
-
-void ndFHsetGrau(tNodeFH *node, int grauNovo){
-    if(!node){
-        printf("dado invalido em ndFHsetGrau!\n");
-        exit(EXIT_FAILURE);
-    }
-    node->grau = grauNovo;
-}
-
-void ndFHincGrau(tNodeFH *node){
-    if(!node){
-        printf("dado invalido em ndFHincGrau!\n");
-        exit(EXIT_FAILURE);
-    }
-    (node->grau)++;
 }
 
 bool ndFHgetMarcado(tNodeFH *node){
