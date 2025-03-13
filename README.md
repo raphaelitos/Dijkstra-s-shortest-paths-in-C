@@ -1,4 +1,6 @@
-# Comparação entre Implementações do Algoritmo de Dijkstra
+# Relatório de Resultados
+
+
 
 ## Introdução
 Este relatório apresenta uma análise comparativa do desempenho do algoritmo de **Dijkstra** utilizando duas estruturas de dados diferentes:
@@ -7,6 +9,8 @@ Este relatório apresenta uma análise comparativa do desempenho do algoritmo de
 - **Heap de Fibonacci**
 
 A avaliação considera o tempo de execução e o uso de memória para diferentes tamanhos de grafos.
+Não houveram casos de falha na execução, de modo que todos as instâncias de teste foram contempladas no presente relatório
+
 
 
 ## Por que Heap Fibonacci?
