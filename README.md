@@ -26,7 +26,7 @@ Foram testadas todos os casos de teste do problema oferecidos pelo professor, qu
 - **p3, p4** → Instâncias médias
 - **m1, m2, m3** → Instâncias  grandes
 
-Cada implementação foi executada e medidas de tempo e memória foram coletadas, usando as ferramentas `valgrind` e a função `clock` da biblioteca `time.h`
+Todos os casos acima foram executados em ambas as implementações e medidas de tempo e memória foram coletadas, usando as ferramentas `valgrind` e a função `clock` da biblioteca `time.h`
 
 ## Resultados
 
