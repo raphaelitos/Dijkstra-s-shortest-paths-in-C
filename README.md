@@ -8,19 +8,16 @@ Este relatório apresenta uma análise comparativa do desempenho do algoritmo de
 
 A avaliação considera o tempo de execução e o uso de memória para diferentes tamanhos de grafos.
 
----
 
 ## Metodologia
 Foram testadas diferentes instâncias do problema, categorizadas em:
 
 - **mp1, mp2** → Instâncias muito pequenas
-- **p1, p2** → Instâncias médias
-- **p3, p4** → Instâncias grandes
-- **m1, m2, m3** → Instâncias muito grandes
+- **p1, p2** → Instâncias pequenas
+- **p3, p4** → Instâncias médias
+- **m1, m2, m3** → Instâncias  grandes
 
 Cada implementação foi executada e medidas de tempo e memória foram coletadas.
-
----
 
 ## Resultados
 
@@ -63,19 +60,12 @@ Cada implementação foi executada e medidas de tempo e memória foram coletadas
 - Para instâncias médias e grandes, o uso de memória da Heap de Fibonacci foi **levemente maior**.
 - Para instâncias muito grandes, a diferença de consumo de memória foi da ordem de **1 MB a mais** para a Heap de Fibonacci.
 
----
-
 ## Conclusão
 1. **Heap de Fibonacci não trouxe um ganho expressivo no tempo de execução**, mesmo para instâncias grandes.
 2. **Heap de Fibonacci usou mais memória em todos os casos**, devido à sua estrutura mais complexa.
 3. **Para instâncias pequenas e médias, as diferenças de desempenho foram mínimas**, tornando a Heap Binária mais atrativa devido à sua simplicidade.
 4. **Para instâncias muito grandes, a Heap Binária teve leve vantagem em tempo e consumo de memória**, tornando-a a melhor escolha na maioria dos cenários práticos.
-
-### **Sugestões para Trabalhos Futuros**
-- Testar os algoritmos em **grafos mais densos**, onde a operação `decrease-key` ocorre com mais frequência, para verificar se a Heap de Fibonacci teria alguma vantagem significativa.
-- Avaliar o impacto da implementação de **Heap de Fibonacci otimizada** com uma estrutura melhor ajustada para cache e operações de hardware modernas.
-
----
+   
 
 ## Referências
 - Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
