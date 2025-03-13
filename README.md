@@ -9,6 +9,11 @@ Este relatório apresenta uma análise comparativa do desempenho do algoritmo de
 A avaliação considera o tempo de execução e o uso de memória para diferentes tamanhos de grafos.
 
 
+## Por que Heap Fibonacci?
+A escolha da **Heap de Fibonacci** para o algoritmo de Dijkstra pode trazer algumas vantagens e desvantagens em relação à Heap Binária. Seu maior benefício é a operação **decrease-key** em tempo **O(1)**, enquanto na Heap Binária essa operação ocorre em **O(log V)**.  Além disso, a inserção na Heap de Fibonacci também ocorre em **O(1)**, tornando-a útil em situações onde novos nós são adicionados dinamicamente. No entanto, a **extração do mínimo** na Heap de Fibonacci ainda ocorre em **O(log V)** e pode ter um overhead maior devido à necessidade de reorganizar múltiplas árvores. Além disso, sua implementação é significativamente mais complexa e requer mais memória devido ao uso de ponteiros extras e estruturas encadeadas.
+
+Levando esses pontos em consideração, o grupo resolveu implementar a Heap Fibonacci para ganhar familiaridade com essa estrutura e ver como ela iria performar em comparação com a Fila de Prioridades.
+
 ## Metodologia
 Foram testadas diferentes instâncias do problema, categorizadas em:
 
@@ -55,9 +60,9 @@ Cada implementação foi executada e medidas de tempo e memória foram coletadas
 | m3        | 762,253,704         | 763,826,224              |
 
 **Observações:**
-- A Heap de Fibonacci sempre utilizou **mais memória** do que a Heap Binária.
+- A Heap de Fibonacci sempre utilizou **mais memória** do que a Heap Binária, o que era esperado, visto que mantém múltiplas listas encadeadas de árvores.
 - Para instâncias pequenas, o overhead da Heap de Fibonacci foi **significativo**.
-- Para instâncias médias e grandes, o uso de memória da Heap de Fibonacci foi **levemente maior**.
+- Para instâncias médias e grandes, o **uso de memória** da Heap Fibonacci e da Fila de Prioridade foi **semelhante**
 - Para instâncias muito grandes, a diferença de consumo de memória foi da ordem de **1 MB a mais** para a Heap de Fibonacci.
 
 ## Conclusão
@@ -70,3 +75,5 @@ Cada implementação foi executada e medidas de tempo e memória foram coletadas
 ## Referências
 - Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
 - Dijkstra, E. W. (1959). "A Note on Two Problems in Connexion with Graphs." Numerische Mathematik, 1(1), 269-271.
+- https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
+- https://youtube.com/playlist?list=PL9xmBV_5YoZNkwWDXcSiZjMgacw2P0U2j&si=5lT-zEfmAxtOy12L
