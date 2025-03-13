@@ -19,14 +19,14 @@ A escolha da **Heap de Fibonacci** para o algoritmo de Dijkstra pode trazer algu
 Levando esses pontos em consideração, o grupo resolveu implementar a Heap Fibonacci para ganhar familiaridade com essa estrutura e ver como ela iria performar em comparação com a Fila de Prioridades.
 
 ## Metodologia
-Foram testadas diferentes instâncias do problema, categorizadas em:
+Foram testadas todos os casos de teste do problema oferecidos pelo professor, categorizados em:
 
 - **mp1, mp2** → Instâncias muito pequenas
 - **p1, p2** → Instâncias pequenas
 - **p3, p4** → Instâncias médias
 - **m1, m2, m3** → Instâncias  grandes
 
-Cada implementação foi executada e medidas de tempo e memória foram coletadas.
+Cada implementação foi executada e medidas de tempo e memória foram coletadas, usando as ferramentas ´valgrind´ e a função ´clock´ da biblioteca ´time.h´
 
 ## Resultados
 
