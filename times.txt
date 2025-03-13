@@ -1,0 +1,20 @@
+PQ
+0.000132 seconds -mp1
+0.000112 seconds --mp2
+0.002108 seconds --p1
+0.002393 seconds --p2
+0.191006 seconds --p3
+0.190916 seconds --p4
+5.197069 seconds --m1
+5.216550 seconds --m2
+5.184763 seconds --m3
+HEAP FIB
+0.000052 seconds --mp1
+0.000064 seconds --mp2
+0.002127 seconds --p1
+0.002238 seconds --p2
+0.221300 seconds --p3
+0.217498 seconds --p4
+5.354844 seconds --m1
+5.371506 seconds --m2
+5.367246 seconds --m3
