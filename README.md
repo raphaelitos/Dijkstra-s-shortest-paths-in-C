@@ -30,14 +30,19 @@ Todos os casos acima foram executados em ambas as implementações e medidas de 
 
 
 ## Exeutando
-Para executar o programa, é necessário adicionar os arquivos de teste fornecidos pelo professor do diretório principal. Depois, basta compilar a implementação desejada do algoritmo com os comandos:
+Para executar o programa, é necessário adicionar os arquivos de teste fornecidos pelo professor do diretório principal. Por exemplo, suponha que tenha mantido o nome como `casos_teste_v3`,
+e queira executar o `caso_teste_muito_pequeno_1` basta compilar a implementação desejada do algoritmo com os comandos:
 
+### Implementação Heap Fibonnaci
 ```
 make fib
-./trab1 /path/to/input/file /path/to/output/file
+./trab1 casos_teste_v3/caso_teste_muito_pequeno_1.txt saida.txt 
 ```
-
-
+### Implementação Fila de Prioridade
+```
+make pq
+./trab1 casos_teste_v3/caso_teste_muito_pequeno_1.txt saida.txt 
+```
 ## Resultados
 
 ### **Tempo de Execução**
