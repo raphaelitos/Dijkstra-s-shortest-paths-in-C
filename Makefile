@@ -1,9 +1,9 @@
 # Define os arquivos a serem excluídos para cada regra
-EXCLUDE_FIB = pqDij.c PQ.c
-EXCLUDE_PQ = fibDij.c fibHeap.c nodeFH.c
+EXCLUDE_FIB = codigo/pqDij.c codigo/PQ.c
+EXCLUDE_PQ = codigo/fibDij.c codigo/fibHeap.c codigo/nodeFH.c
 
-# Lista todos os arquivos .c no diretório atual
-SRCS = $(wildcard *.c)
+# Lista todos os arquivos .c dentro da pasta "codigo"
+SRCS = $(wildcard codigo/*.c)
 
 # Filtra os arquivos para cada regra
 SRCS_FIB = $(filter-out $(EXCLUDE_FIB), $(SRCS))

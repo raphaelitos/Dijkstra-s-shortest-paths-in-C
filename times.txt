@@ -1,20 +1,21 @@
 PQ
-0.000132 seconds -mp1
-0.000112 seconds --mp2
-0.002108 seconds --p1
-0.002393 seconds --p2
-0.191006 seconds --p3
-0.190916 seconds --p4
-5.197069 seconds --m1
-5.216550 seconds --m2
-5.184763 seconds --m3
+0.000132 seconds --mp1 1968 bytes allocated
+0.000112 seconds --mp2 1968 bytes allocated
+0.002108 seconds --p1  321,512 bytes allocated 
+0.002393 seconds --p2  323,688 bytes allocated
+0.191006 seconds --p3  30,576,648 bytes allocated
+0.190916 seconds --p4  30,589,384 bytes allocated
+5.197069 seconds --m1  762,220,296 bytes allocated
+5.216550 seconds --m2  762,262,344 bytes allocated
+5.184763 seconds --m3  762,253,704 bytes allocated
+
 HEAP FIB
-0.000052 seconds --mp1
-0.000064 seconds --mp2
-0.002127 seconds --p1
-0.002238 seconds --p2
-0.221300 seconds --p3
-0.217498 seconds --p4
-5.354844 seconds --m1
-5.371506 seconds --m2
-5.367246 seconds --m3
+0.000052 seconds --mp1  7,064 bytes allocated
+0.000064 seconds --mp2  8,688 bytes allocated
+0.002127 seconds --p1   342,304 bytes allocated
+0.002238 seconds --p2   344,608 bytes allocated
+0.221300 seconds --p3   30,871,072 bytes allocated
+0.217498 seconds --p4   30,882,776 bytes allocated
+5.354844 seconds --m1   763,777,624 bytes allocated
+5.371506 seconds --m2   763,828,072 bytes allocated
+5.367246 seconds --m3   763,826,224 bytes allocated
