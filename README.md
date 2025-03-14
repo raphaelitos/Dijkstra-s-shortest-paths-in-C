@@ -32,7 +32,7 @@ Todos os casos acima foram executados em ambas as implementações e medidas de 
 ## Exeutando
 Para executar o programa, é necessário adicionar os arquivos de teste fornecidos pelo professor do diretório principal. Depois, basta compilar a implementação desejada do algoritmo com os comandos:
 
-`make fib
+`make fib\
 ./trab1 /path/to/input/file /path/to/output/file`
 
 ## Resultados
