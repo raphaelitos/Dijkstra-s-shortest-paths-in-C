@@ -28,6 +28,13 @@ Foram testadas todos os casos de teste do problema oferecidos pelo professor, qu
 
 Todos os casos acima foram executados em ambas as implementações e medidas de tempo e memória foram coletadas, usando as ferramentas `valgrind` e a função `clock` da biblioteca `time.h`
 
+
+## Exeutando
+Para executar o programa, é necessário adicionar os arquivos de teste fornecidos pelo professor do diretório principal. Depois, basta compilar a implementação desejada do algoritmo com os comandos:
+
+`make fib
+./trab1 /path/to/input/file /path/to/output/file`
+
 ## Resultados
 
 ### **Tempo de Execução**
@@ -81,4 +88,4 @@ Todos os casos acima foram executados em ambas as implementações e medidas de 
 - Dijkstra, E. W. (1959). "A Note on Two Problems in Connexion with Graphs." Numerische Mathematik, 1(1), 269-271.
 - https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
 - https://youtube.com/playlist?list=PL9xmBV_5YoZNkwWDXcSiZjMgacw2P0U2j&si=5lT-zEfmAxtOy12L
-- 
+
