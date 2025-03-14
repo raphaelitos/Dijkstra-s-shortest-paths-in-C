@@ -27,22 +27,45 @@ Foram testadas todos os casos de teste do problema oferecidos pelo professor, qu
 - **m1, m2, m3** → Instâncias  grandes
 
 Todos os casos acima foram executados em ambas as implementações e medidas de tempo e memória foram coletadas, usando as ferramentas `valgrind` e a função `clock` da biblioteca `time.h`
+## Entrada e Saída
+O programa aceita arquivos de entrada no formato `.txt`, de forma que a primeira linha contenha o nome do vértice fonte e as demais contenham os nomes dos vértices e os pesos de suas arestas, como no exemplo:
+
+```
+node_0
+node_0, 10, 0, 5, 0
+node_1, 0, 1, 2, 0
+node_2, 0, 0, 0, 4
+node_3, 0, 3, 3, 0
+node_4, 7, 0, 6, 0
+```
+Após a execução, o programa escreverá os resultados no arquivo de saída da seguinte forma, no caso do exemplo anterior:
+
+```
+SHORTEST PATH TO node_0: node_0 <- node_0 (Distance: 0.00)
+SHORTEST PATH TO node_3: node_3 <- node_0 (Distance: 5.00)
+SHORTEST PATH TO node_1: node_1 <- node_3 <- node_0 (Distance: 8.00)
+SHORTEST PATH TO node_2: node_2 <- node_3 <- node_0 (Distance: 8.00)
+SHORTEST PATH TO node_4: node_4 <- node_2 <- node_3 <- node_0 (Distance: 12.00)
+```
 
 
-## Exeutando
-Para executar o programa, é necessário adicionar os arquivos de teste fornecidos pelo professor do diretório principal. Por exemplo, suponha que tenha mantido o nome como `casos_teste_v3`,
+## Executando
+Para executar o programa, basta compilar o código fonte e fornecer os arquivos de entrada e saída. Por exemplo, suponha que tenha mantido o nome como `casos_teste_v3`,
 e queira executar o `caso_teste_muito_pequeno_1` basta compilar a implementação desejada do algoritmo com os comandos:
 
 ### Implementação Heap Fibonnaci
 ```
 make fib
-./trab1 casos_teste_v3/caso_teste_muito_pequeno_1.txt saida.txt 
+./trab1 path/to/input/file path/to/output/file
 ```
 ### Implementação Fila de Prioridade
 ```
 make pq
-./trab1 casos_teste_v3/caso_teste_muito_pequeno_1.txt saida.txt 
+./trab1 path/to/input/file path/to/output/file
 ```
+
+Caso o arquivo de saída não exista, ele será criado automaticamente
+
 ## Resultados
 
 ### **Tempo de Execução**
