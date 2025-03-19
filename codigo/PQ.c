@@ -115,7 +115,7 @@ int PQ_size(PQ *pq) {
     return pq->atual_N;
 }
 
-void PQ_decrementaChave(PQ *pq, tVertice *v, int novaDist) {
+void PQ_decrementaChave(PQ *pq, tVertice *v, float novaDist) {
     if (!pq || !v) return;
 
     // Se a novaDist for maior ou igual ao valor atual, não faz sentido "diminuir"

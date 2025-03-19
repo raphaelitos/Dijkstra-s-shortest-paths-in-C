@@ -65,7 +65,7 @@ tVertice* getPaiVert(tVertice* v) {
     return v->pai;
 }
 
-void setAccVert(tVertice* v, int acc) {
+void setAccVert(tVertice* v, float acc) {
     if(v == NULL) return;
     v->acc = acc;
 }

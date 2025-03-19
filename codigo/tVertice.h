@@ -16,13 +16,6 @@ tVertice *criaVertice(const char *nome);
 /// @param v um vertice valido
 void apagaVertice(tVertice* v);
 
-/// @brief cria a "aresta" de v ao vizinho
-/// @param v o vertice cuja lista esta sendo feita
-/// @param id_vizinho o outro vertice que se relaciona com v ( a outra ponta da aresta)
-/// @param peso  peso da aresta
-void adicionaLista(tVertice *v, int id_vizinho, int peso);
-
-
 /// @brief obtem a lista de adjascencias de v
 /// @param v um vertice valido
 /// @return uma lista generica com os vertices
@@ -55,7 +48,7 @@ tVertice* getPaiVert(tVertice* v);
 /// @brief Define o valor acumulado para o vértice v
 /// @param v o vértice cujo valor será definido
 /// @param acc o valor acumulador
-void setAccVert(tVertice* v, int acc);
+void setAccVert(tVertice* v, float acc);
 
 /// @brief Obtem o valor acumulado de v
 /// @param v o vértice que terá seu valor retornado
