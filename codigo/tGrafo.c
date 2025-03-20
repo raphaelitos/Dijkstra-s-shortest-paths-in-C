@@ -147,7 +147,7 @@ static int cmpVertice(const void *v1, const void *v2) {
     else if (accV1 > accV2)
         return 1;
     else
-        return strcmp(getNomeVert(vert1), getNomeVert(vert2));
+        return 0;
 }
 
 void ImprimeCaminho(FILE* arquivo, tVertice* v, tVertice* src) {
