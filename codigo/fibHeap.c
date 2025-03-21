@@ -1,3 +1,15 @@
+/**
+ * @file    fibHeap.c
+ * @brief   Implementa as funcoes definindas no respectivo header, referentes
+ * a uma heap fibonacci
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+ * 
+ * A implementacao da estrutura foi inspirada no codigo em python disponivel em:
+ * https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,8 +17,6 @@
 #include <math.h>
 
 /// @brief Representa uma Heap Fibonacci.
-/// Estrutura adaptada de:
-/// https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
 struct fibHeap
 {
     // numero de nos na heap

@@ -1,3 +1,15 @@
+/**
+ * @file    PQ.c
+ * @brief   Implementa funcoes referentes a uma fila de prioridades
+ * com heap binaria
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+ * 
+ * O codigo foi adaptado do exemplo dado em aula e presente nos materiais
+ * disponibilizados pelo professor
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "PQ.h"

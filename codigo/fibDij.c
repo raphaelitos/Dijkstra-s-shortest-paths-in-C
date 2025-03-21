@@ -1,3 +1,12 @@
+/**
+ * @file    fibDij.c
+ * @brief   Arquivo onde o algoritmo de dijkstra foi implementado
+ * usando-se uma heap fibonacci
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tGrafo.h"

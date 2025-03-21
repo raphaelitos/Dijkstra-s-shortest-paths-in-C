@@ -1,3 +1,11 @@
+/**
+ * @file    nodeFH.h
+ * @brief   Implementa funcoes referentes ao no de uma heap fibonacci
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+*/
+
 #ifndef _FIB_HEAP_NODE_H_
 #define _FIB_HEAP_NODE_H_
 

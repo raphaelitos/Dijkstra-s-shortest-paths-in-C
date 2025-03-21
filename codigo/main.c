@@ -1,8 +1,15 @@
+/**
+ * @file    main.c
+ * @brief   Arquivo principal, que constroi um grafo a partir de um
+ * arquivo de entrada fornecido em argv[1] e imprime o resultado do algoritmo de 
+ * Dijkstra num outro de saida, fornecido em argv[2].
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+*/
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "tGrafo.h"
-#include <time.h>
 
 int main(int argc, char *argv[])
 {

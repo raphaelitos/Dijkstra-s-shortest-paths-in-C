@@ -1,3 +1,12 @@
+/**
+ * @file    tVertice.c
+ * @brief   Implementa funcoes referentes a um vertice
+ * de um grafo dirigido ponderado
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

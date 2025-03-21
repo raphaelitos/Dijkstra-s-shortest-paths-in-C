@@ -1,3 +1,11 @@
+/**
+ * @file    listaGen.h
+ * @brief   definicao de funcoes referentes a uma lista encadeada generica
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+*/
+
 #ifndef LISTAGEN_H_
 #define LISTAGEN_H_
 

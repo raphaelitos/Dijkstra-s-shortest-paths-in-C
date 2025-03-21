@@ -1,3 +1,14 @@
+/**
+ * @file    fibHeap.h
+ * @brief   Define as funcoes referentes a uma heap fibonacci
+ * @author  Conrado Antoniazi dos Santos (conrado.santos@edu.ufes.br)
+ * @author  Raphael Correia Dornelas (raphael.dornelas@edu.ufes.br)
+ * @author  Victor Augusto Fernandes Rangel (victor.a.rangel@edu.ufes.br)
+ * 
+ * A implementacao da estrutura foi inspirada no codigo em python disponivel em:
+ * https://github.com/msambol/dsa/blob/master/data_structures/fibonacci_heap.py
+*/
+
 #ifndef _FIB_HEAP_
 #define _FIB_HEAP_
 
