@@ -14,11 +14,11 @@ TARGET = trab1
 
 # Regra para compilar "fib"
 fib:
-	gcc $(SRCS_FIB) -lm -o $(TARGET)
+	@gcc $(SRCS_FIB) -lm -o $(TARGET)
 
 # Regra para compilar "pq"
 pq:
-	gcc $(SRCS_PQ) -o $(TARGET)
+	@gcc $(SRCS_PQ) -o $(TARGET)
 
 # Regra para limpar os arquivos gerados
 clean:
