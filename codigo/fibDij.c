@@ -49,8 +49,8 @@ void Dijkstra(tGrafo *g, tVertice *source) {
             tAresta *aresta = (tAresta*) getInfoListaGen(aux);
             tVertice *v = getDestinoAresta(aresta); 
             
-            float peso = getPesoAresta(aresta);
-            float alt = getAccVert(u) + peso; 
+            double peso = getPesoAresta(aresta);
+            double alt = getAccVert(u) + peso; 
             
             if (alt < getAccVert(v)) {
                 //Atualiza o pai e a fh

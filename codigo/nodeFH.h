@@ -53,9 +53,9 @@ tNodeFH* ndFHremoveFilho(tNodeFH *pai, tNodeFH *filho);
 
 //getters e setters
 
-float ndFHgetKey(tNodeFH *nodeFH);
+double ndFHgetKey(tNodeFH *nodeFH);
 
-void ndFHsetKey(tNodeFH *nodeFH, float newKey);
+void ndFHsetKey(tNodeFH *nodeFH, double newKey);
 
 tVertice* ndFHgetVert(tNodeFH *nodeFH);
 

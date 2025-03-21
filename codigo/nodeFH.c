@@ -157,7 +157,7 @@ tNodeFH* ndFHremoveFilho(tNodeFH *lista, tNodeFH *filho){
     return filho;
 }
 
-float ndFHgetKey(tNodeFH *nodeFH){
+double ndFHgetKey(tNodeFH *nodeFH){
     if(!nodeFH){
         printf("Dados invalidos em ndFHgetKey!\n");
         exit(EXIT_FAILURE);
@@ -165,7 +165,7 @@ float ndFHgetKey(tNodeFH *nodeFH){
     return getAccVert(nodeFH->vert);
 }
 
-void ndFHsetKey(tNodeFH *nodeFH, float newKey){
+void ndFHsetKey(tNodeFH *nodeFH, double newKey){
     if(!nodeFH){
         printf("dado invalido em ndFHsetKey!\n");
         exit(EXIT_FAILURE);

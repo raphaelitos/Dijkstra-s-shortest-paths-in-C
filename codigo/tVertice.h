@@ -57,13 +57,13 @@ tVertice* getPaiVert(tVertice* v);
 /// @brief Define o valor acumulado para o vértice v
 /// @param v o vértice cujo valor será definido
 /// @param acc o valor acumulador
-void setAccVert(tVertice* v, float acc);
+void setAccVert(tVertice* v, double acc);
 
 /// @brief Obtem o valor acumulado de v
 /// @param v o vértice que terá seu valor retornado
 /// @return o valor correspondente 'a distancia
 /// de v ao vertice fonte
-float getAccVert(tVertice* v);
+double getAccVert(tVertice* v);
 
 /// @brief Define a posicao de v na heap binaria
 /// @param v um vertice valido

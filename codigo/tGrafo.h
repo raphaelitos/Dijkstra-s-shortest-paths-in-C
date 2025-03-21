@@ -26,10 +26,6 @@ tGrafo* GrafoInit(char* path);
 /// @param grafo um grafo valido
 void DesalocaGrafo(tGrafo* grafo);
 
-/// @brief Exibe as informacoes de grafo no terminal
-/// @param grafo um grafo valido
-void ImprimeGrafo(tGrafo* grafo);
-
 /// @brief Obtem o vertice origem de g
 /// @param g um grafo valido
 /// @return o vertice de origem do caminho

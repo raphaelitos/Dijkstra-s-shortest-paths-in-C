@@ -438,7 +438,7 @@ static void corteRec(tFH *fh, tNodeFH *y)
     }
 }
 
-void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey)
+void fhDecreaseKey(tFH *fh, tNodeFH *node, double newKey)
 {
     if (!fh || !node)
     {

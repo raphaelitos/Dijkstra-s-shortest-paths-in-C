@@ -22,7 +22,7 @@ struct vertice{
     char nome[TAM_MAX_NOME]; // Rotulo
     tListaGen *adjacencias; // Lista genérica contendo arestas
     tVertice* pai; // predecessor no caminho minimo
-    float acc; // distancia ate o vertice fonte
+    double acc; // distancia ate o vertice fonte
     int posHeap; // posicao na heap binaria
     tNodeFH *nodeFH; // representante na heap fibonacci
 };
@@ -74,12 +74,12 @@ tVertice* getPaiVert(tVertice* v) {
     return v->pai;
 }
 
-void setAccVert(tVertice* v, float acc) {
+void setAccVert(tVertice* v, double acc) {
     if(v == NULL) return;
     v->acc = acc;
 }
 
-float getAccVert(tVertice* v) {
+double getAccVert(tVertice* v) {
     if(v == NULL) return -1;
     return v->acc;
 }

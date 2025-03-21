@@ -26,7 +26,7 @@ struct pq{
  * Retorna um valor positivo se v1.acc > v2.acc.
  * Retorna zero se v1.acc == v2.acc.
  */
-static float ComparaVertice(tVertice *v1, tVertice *v2) {
+static double ComparaVertice(tVertice *v1, tVertice *v2) {
     return getAccVert(v1) - getAccVert(v2);
 }
 
@@ -127,7 +127,7 @@ int PQ_size(PQ *pq) {
     return pq->atual_N;
 }
 
-void PQ_decrementaChave(PQ *pq, tVertice *v, float novaDist) {
+void PQ_decrementaChave(PQ *pq, tVertice *v, double novaDist) {
     if (!pq || !v) return;
 
     // Se a novaDist for maior ou igual ao valor atual, não faz sentido "diminuir"

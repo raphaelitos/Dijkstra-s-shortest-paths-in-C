@@ -20,10 +20,10 @@ struct aresta{
     // custo para chegar ao destino 
     // saindo do vertice que possui a aresta
     // em sua lista de adjacencias
-    float peso;      
+    double peso;      
 };
 
-tAresta *criaAresta(tVertice* destino, float peso){
+tAresta *criaAresta(tVertice* destino, double peso){
     tAresta *aresta = (tAresta *)calloc(1, sizeof(tAresta));
     if (!aresta) exit(EXIT_FAILURE);
     
@@ -38,14 +38,7 @@ void apagaAresta(void* a) {
     if(aresta != NULL) free(a);
 }
 
-int ImprimeAresta(void* a, void* b) {
-    tAresta* aresta = (tAresta*) a;
-    printf("%s [%.2f], ", getNomeVert(aresta->destino), aresta->peso);
-
-    return 1;
-}
-
-float getPesoAresta(tAresta *a) {
+double getPesoAresta(tAresta *a) {
     return a->peso; 
 }
 tVertice* getDestinoAresta(tAresta *a) {

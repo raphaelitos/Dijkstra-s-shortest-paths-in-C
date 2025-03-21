@@ -47,6 +47,6 @@ bool PQ_is_empty(PQ *pq);
  */
 int PQ_size(PQ *pq);
 
-void PQ_decrementaChave(PQ *pq, tVertice *v, float novaDist);
+void PQ_decrementaChave(PQ *pq, tVertice *v, double novaDist);
 
 #endif

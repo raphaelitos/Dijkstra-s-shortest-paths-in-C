@@ -9,16 +9,18 @@ SRCS = $(wildcard codigo/*.c)
 SRCS_FIB = $(filter-out $(EXCLUDE_FIB), $(SRCS))
 SRCS_PQ = $(filter-out $(EXCLUDE_PQ), $(SRCS))
 
+FLAGS = -Wall -Wextra
+
 # Nome do executável
 TARGET = trab1
 
 # Regra para compilar "fib"
 fib:
-	@gcc $(SRCS_FIB) -lm -o $(TARGET)
+	@gcc $(FLAGS) $(SRCS_FIB) -lm -o $(TARGET)
 
 # Regra para compilar "pq"
 pq:
-	@gcc $(SRCS_PQ) -o $(TARGET)
+	@gcc $(FLAGS) $(SRCS_PQ) -o $(TARGET)
 
 # Regra para limpar os arquivos gerados
 clean:

@@ -82,9 +82,9 @@ tGrafo* GrafoInit(char* path) {
 
         for(int j = 0; j < numNodes; j++) {
             if(j == i) continue; //pula para nao atribuir peso a uma aresta para o proprio vertice analisado
-            float peso = 0;
+            double peso = 0;
 
-            if(fscanf(file, "%f", &peso) == 1 && peso > 0) {
+            if(fscanf(file, "%lf", &peso) == 1 && peso > 0) {
                 addVizinhoVert(grafo->vertices[i], criaAresta(grafo->vertices[j], peso));
                 fscanf(file, "%*c");
             }
@@ -113,16 +113,6 @@ void DesalocaGrafo(tGrafo* grafo) {
     free(grafo);
 }
 
-void ImprimeGrafo(tGrafo* grafo) {
-    printf("%s\n", getNomeVert(grafo->origem));
-
-    for(int i = 0; i < grafo->numVertices; i++) {
-        printf("%s, ", getNomeVert(grafo->vertices[i]));
-        percorreListaGen(getAdjVert(grafo->vertices[i]), ImprimeAresta, NULL);
-        printf("\n");
-    }
-}
-
 tVertice *getOrigemGrafo(tGrafo *g){
     if(!g) return NULL;
     return g->origem;
@@ -148,8 +138,8 @@ int getNumVerticesGrafo(tGrafo *g){
 static int cmpVertice(const void *v1, const void *v2) {
     tVertice *vert1 = *(tVertice **)v1;
     tVertice *vert2 = *(tVertice **)v2;
-    float accV1 = getAccVert(vert1);
-    float accV2 = getAccVert(vert2);
+    double accV1 = getAccVert(vert1);
+    double accV2 = getAccVert(vert2);
     
     if (accV1 < accV2)
         return -1;
@@ -193,7 +183,7 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
 
     for (int i = 0; i < numVertices; i++) {
         tVertice *v = grafo->vertices[i];
-        float dist = getAccVert(v);  // dist
+        double dist = getAccVert(v);  // dist
 
         // Confere se o vertice e' alcancavel
         if (dist == INT_MAX) {
@@ -204,7 +194,7 @@ void ImprimeCaminhosMenorCusto(tGrafo *grafo, tVertice *source, char *path) {
 
         ImprimeCaminho(arquivo, v, getOrigemGrafo(grafo));
 
-        fprintf(arquivo, " (Distance: %.2f)\n", dist);
+        fprintf(arquivo, " (Distance: %.2lf)\n", dist);
     }
 
     fclose(arquivo);

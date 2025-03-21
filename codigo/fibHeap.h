@@ -67,7 +67,7 @@ tFH* fhUnion(tFH *fh, tFH *outra);
 /// @param node um no valido existente em fh
 /// @param newKey candidato a nova distancia de 
 /// node 'a origem
-void fhDecreaseKey(tFH *fh, tNodeFH *node, float newKey);
+void fhDecreaseKey(tFH *fh, tNodeFH *node, double newKey);
 
 /// @brief verifica se fh esta vazia
 /// @param fh uma fib heap valida
