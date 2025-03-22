@@ -113,7 +113,7 @@ Caso o arquivo de saída não exista, ele será criado automaticamente
 4. **Para instâncias muito grandes, a Heap Binária teve leve vantagem em tempo e consumo de memória**, tornando-a a melhor escolha na maioria dos cenários práticos.
    
 ## Tratamento de E/S:
-Nos arquivos de entrada, há algumas entradas com literalmente a string `lixo`. A solução foi: ao encontrar essas entradas,  apenas pular para a próxima, até que uma entrada válida fosse encontrada
+Nos arquivos de entrada, algumas entradas contêm a string `bomba`. A solução adotada foi ignorar essas entradas e seguir para a próxima, até encontrar uma entrada válida.
 ## Referências
 - Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
 - Dijkstra, E. W. (1959). "A Note on Two Problems in Connexion with Graphs." Numerische Mathematik, 1(1), 269-271.
